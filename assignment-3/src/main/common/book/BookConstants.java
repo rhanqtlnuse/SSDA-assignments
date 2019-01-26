@@ -1,4 +1,4 @@
-package main.common.constant;
+package main.common.book;
 
 import java.util.ArrayList;
 import java.util.List;

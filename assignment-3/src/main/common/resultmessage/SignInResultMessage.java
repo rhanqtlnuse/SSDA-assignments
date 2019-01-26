@@ -1,4 +1,4 @@
-package main.common.message;
+package main.common.resultmessage;
 
 public enum SignInResultMessage {
 

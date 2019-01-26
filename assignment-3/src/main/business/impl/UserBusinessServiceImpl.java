@@ -1,15 +1,12 @@
 package main.business.impl;
 
 import main.business.impl.user.PersonalInfoMediator;
-import main.business.impl.user.factory.AdministratorFactory;
-import main.business.impl.user.factory.GraduateFactory;
-import main.business.impl.user.factory.TeacherFactory;
-import main.business.impl.user.factory.UndergraduateFactory;
+import main.business.impl.user.factory.*;
 import main.business.service.UserBusinessService;
 import main.common.user.UserType;
-import main.common.message.CancelResultMessage;
-import main.common.message.SignInResultMessage;
-import main.common.message.SignUpResultMessage;
+import main.common.resultmessage.CancelResultMessage;
+import main.common.resultmessage.SignInResultMessage;
+import main.common.resultmessage.SignUpResultMessage;
 import main.common.user.*;
 import main.data.impl.user.UserDataServiceImpl;
 import main.data.service.user.UserDataService;
@@ -23,6 +20,19 @@ import main.data.service.user.UserDataService;
  */
 public class UserBusinessServiceImpl implements UserBusinessService {
 
+    /**
+     * ADMINISTRATOR,
+     * TEACHER,
+     * GRADUATE,
+     * UNDERGRADUATE
+     */
+    private static final UserFactory[] FACTORIES = new UserFactory[] {
+            AdministratorFactory.getInstance(),
+            TeacherFactory.getInstance(),
+            GraduateFactory.getInstance(),
+            UndergraduateFactory.getInstance()
+    };
+
     private static UserBusinessServiceImpl singleton = new UserBusinessServiceImpl();
 
     public static UserBusinessService getInstance() {
@@ -33,23 +43,11 @@ public class UserBusinessServiceImpl implements UserBusinessService {
     private final PersonalInfoMediator personalInfoMediator = PersonalInfoMediator.getInstance();
 
     private UserBusinessServiceImpl() { }
+
     @Override
     public SignUpResultMessage signUp(String username, String password, UserType type) {
-        switch (type) {
-            case TEACHER:
-                userDataService.add(TeacherFactory.getInstance().create(username, password));
-                break;
-            case GRADUATE:
-                userDataService.add(GraduateFactory.getInstance().create(username, password));
-                break;
-            case UNDERGRADUATE:
-                userDataService.add(UndergraduateFactory.getInstance().create(username, password));
-                break;
-            case ADMINISTRATOR:
-                userDataService.add(AdministratorFactory.getInstance().create(username, password));
-                break;
-        }
-        return null;
+        userDataService.add(FACTORIES[type.ordinal()].create(username, password));
+        return SignUpResultMessage.SUCCEEDED;
     }
 
     @Override
@@ -60,27 +58,9 @@ public class UserBusinessServiceImpl implements UserBusinessService {
     }
 
     @Override
-    public boolean editPersonalInfo(Teacher u) {
+    public boolean editPersonalInfo(User u) {
         personalInfoMediator.editUserInfo(u);
-        return false;
-    }
-
-    @Override
-    public boolean editPersonalInfo(Graduate u) {
-        personalInfoMediator.editUserInfo(u);
-        return false;
-    }
-
-    @Override
-    public boolean editPersonalInfo(Undergraduate u) {
-        personalInfoMediator.editUserInfo(u);
-        return false;
-    }
-
-    @Override
-    public boolean editPersonalInfo(Administrator u) {
-        personalInfoMediator.editUserInfo(u);
-        return false;
+        return true;
     }
 
     @Override

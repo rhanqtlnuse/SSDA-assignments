@@ -34,6 +34,11 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
+    public void add(User u) {
+
+    }
+
+    @Override
     public void remove(User u) {
 
     }

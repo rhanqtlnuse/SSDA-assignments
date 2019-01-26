@@ -6,6 +6,14 @@ import main.common.book.Book;
 
 public class ReaderBusinessServiceImpl implements ReaderBusinessService {
 
+    private static final ReaderBusinessService singleton = new ReaderBusinessServiceImpl();
+
+    public static ReaderBusinessService getInstance() {
+        return singleton;
+    }
+
+    private ReaderBusinessServiceImpl() { }
+
     @Override
     public String show(String isbn) {
         return null;
@@ -13,17 +21,16 @@ public class ReaderBusinessServiceImpl implements ReaderBusinessService {
 
     @Override
     public String show(Book b) {
-
         return null;
     }
 
     @Override
-    public String showIn(String isbn, Formatter formatter) {
+    public String show(String isbn, Formatter formatter) {
         return null;
     }
 
     @Override
-    public String showIn(Book b, Formatter formatter) {
+    public String show(Book b, Formatter formatter) {
         return null;
     }
 

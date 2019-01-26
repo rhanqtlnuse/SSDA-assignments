@@ -33,23 +33,7 @@ public class PersonalInfoMediator {
         admins.remove(admin);
     }
 
-    public void editUserInfo(Teacher u) {
-        // store
-        informAll(u);
-    }
-
-    public void editUserInfo(Graduate u) {
-        // store
-        informAll(u);
-    }
-
-    public void editUserInfo(Undergraduate u) {
-        // store
-        informAll(u);
-    }
-
-    public void editUserInfo(Administrator u) {
-        // store
+    public void editUserInfo(User u) {
         informAll(u);
     }
 

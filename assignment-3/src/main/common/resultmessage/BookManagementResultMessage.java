@@ -1,4 +1,4 @@
-package main.common.message;
+package main.common.resultmessage;
 
 public enum BookManagementResultMessage {
 
@@ -19,4 +19,5 @@ public enum BookManagementResultMessage {
     public String toString() {
         return literal;
     }
+
 }

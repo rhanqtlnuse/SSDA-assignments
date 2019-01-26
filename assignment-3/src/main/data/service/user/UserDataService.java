@@ -8,6 +8,7 @@ public interface UserDataService {
     void add(Graduate u);
     void add(Undergraduate u);
     void add(Administrator u);
+    void add(User u);
 
     void remove(User u);
 

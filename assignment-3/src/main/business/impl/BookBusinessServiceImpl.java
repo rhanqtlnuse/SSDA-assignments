@@ -2,15 +2,13 @@ package main.business.impl;
 
 import main.business.service.BookBusinessService;
 import main.common.book.Book;
-import main.common.message.BookManagementResultMessage;
+import main.common.resultmessage.BookManagementResultMessage;
 import main.data.impl.book.BookDataServiceImpl;
 import main.data.service.book.BookDataService;
 
 import java.util.List;
 
 /**
- * TODO
- *
  * 书籍管理业务逻辑实现类
  *
  * @author HanQi

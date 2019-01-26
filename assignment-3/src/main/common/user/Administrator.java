@@ -1,28 +1,12 @@
 package main.common.user;
 
-import main.common.Visitor;
-
 public class Administrator extends User {
+
+    private static final int ADMIN_CHECK_OUT_LIMIT = Integer.MAX_VALUE;
 
     public Administrator(String username, String password) {
         super(username, password);
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        // TODO
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        // TODO
-        return super.hashCode();
+        setLimit(ADMIN_CHECK_OUT_LIMIT);
     }
 
 }

@@ -1,7 +1,7 @@
 package main.business.service;
 
 import main.common.book.Book;
-import main.common.message.BookManagementResultMessage;
+import main.common.resultmessage.BookManagementResultMessage;
 
 import java.util.List;
 
