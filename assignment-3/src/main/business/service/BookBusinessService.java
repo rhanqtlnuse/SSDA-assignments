@@ -16,6 +16,12 @@ public interface BookBusinessService {
 
     BookManagementResultMessage remove(Book b);
 
+    /**
+     * Book 类未提供 isbn，title，author 等属性的接口，
+     * 需要创建新的 Book 对象
+     *
+     * @see Book
+     */
     BookManagementResultMessage editBookInfo(Book b);
 
     Book findByISBN(String isbn);

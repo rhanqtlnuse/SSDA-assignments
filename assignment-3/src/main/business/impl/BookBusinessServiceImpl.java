@@ -38,6 +38,8 @@ public class BookBusinessServiceImpl implements BookBusinessService {
     private BookDataService bookDataService = BookDataServiceImpl.getInstance();
     private UserDataService userDataService = UserDataServiceImpl.getInstance();
 
+    private static final double OVERDUE_PENALTY = 0.5;
+
     @Override
     public BookManagementResultMessage add(Book b) {
         if (b == null) {
@@ -61,11 +63,13 @@ public class BookBusinessServiceImpl implements BookBusinessService {
 
     @Override
     public BookManagementResultMessage remove(Book b) {
+        bookDataService.remove(b);
         return BookManagementResultMessage.SUCCEEDED;
     }
 
     @Override
     public BookManagementResultMessage editBookInfo(Book b) {
+        bookDataService.update(b);
         return BookManagementResultMessage.SUCCEEDED;
     }
 
@@ -99,6 +103,9 @@ public class BookBusinessServiceImpl implements BookBusinessService {
         return (CheckOutResultMessage) u.accept(new CheckOutVisitor(b));
     }
 
+    /**
+     * TODO: 超期惩罚
+     */
     @Override
     public void checkIn(User u, Book b) {
         CheckInRecord record = new CheckInRecord(u, b, new Date());

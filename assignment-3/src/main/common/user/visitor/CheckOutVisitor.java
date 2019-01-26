@@ -13,7 +13,7 @@ import main.data.impl.book.BookDataServiceImpl;
 import main.data.impl.user.UserDataServiceImpl;
 import main.data.service.book.BookDataService;
 import main.data.service.user.UserDataService;
-import main.util.DateTransfer;
+import main.util.DateTranslator;
 
 import java.util.Date;
 
@@ -75,7 +75,7 @@ public class CheckOutVisitor extends Visitor {
 
     private ResultMessage checkOut(User u, Book b) {
         Date now = new Date();
-        CheckOutRecord record = new CheckOutRecord(u, b, now, DateTransfer.after(now, u.getPeriodLimitation()));
+        CheckOutRecord record = new CheckOutRecord(u, b, now, DateTranslator.after(now, u.getPeriodLimitation()));
         u.getCheckOutRecords().add(record);
         u.setBorrowedCount(u.getBorrowedCount() + 1);
         b.setOutCount(b.getOutCount() + 1);

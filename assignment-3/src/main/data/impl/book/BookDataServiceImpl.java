@@ -1,6 +1,5 @@
 package main.data.impl.book;
 
-import main.common.user.visitor.CheckOutVisitor;
 import main.common.book.Book;
 import main.data.service.book.BookDataService;
 
@@ -8,13 +7,15 @@ import java.util.List;
 
 public class BookDataServiceImpl implements BookDataService {
 
+    private static final Book[] BOOKS = new Book[] {
+
+    };
+
     private static BookDataServiceImpl singleton = new BookDataServiceImpl();
 
     public static BookDataServiceImpl getInstance() {
         return singleton;
     }
-
-    private static final CheckOutVisitor checkOutVisitor = new CheckOutVisitor();
 
     private BookDataServiceImpl() { }
 
@@ -48,5 +49,9 @@ public class BookDataServiceImpl implements BookDataService {
         return null;
     }
 
+    @Override
+    public List<Book> findAll() {
+        return null;
+    }
 
 }

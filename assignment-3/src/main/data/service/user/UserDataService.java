@@ -2,6 +2,8 @@ package main.data.service.user;
 
 import main.common.user.*;
 
+import java.util.List;
+
 public interface UserDataService {
 
     void add(Teacher u);
@@ -12,12 +14,9 @@ public interface UserDataService {
 
     void remove(User u);
 
-    void update(Teacher u);
-    void update(Graduate u);
-    void update(Undergraduate u);
-    void update(Administrator u);
     void update(User u);
 
     User findByUsername(String username);
+    List<User> findAll();
 
 }

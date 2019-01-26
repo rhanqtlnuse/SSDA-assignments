@@ -123,11 +123,14 @@ public abstract class User {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof User) {
-            return username.equals(((User) o).username);
-        } else {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        User that = (User) o;
+        return Objects.equals(username, that.username);
     }
 
     @Override

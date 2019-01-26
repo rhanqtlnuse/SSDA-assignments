@@ -2,15 +2,15 @@ package main.business.impl.user;
 
 import main.common.user.Administrator;
 import main.common.user.User;
+import main.common.user.message.MessageGenerator;
+import main.data.impl.user.UserDataServiceImpl;
+import main.data.service.user.UserDataService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
- *
  * 中介类，用户修改信息之后通知管理员
- * 考虑使用**队列**
  */
 public class PersonalInfoMediator {
 
@@ -22,34 +22,37 @@ public class PersonalInfoMediator {
         return singleton;
     }
 
+    private final UserDataService userDataService = UserDataServiceImpl.getInstance();
+
     private PersonalInfoMediator() {
         this.admins = new ArrayList<>();
     }
 
-    public void addAdmin(Administrator admin)  {
+    public void addAdministrator(Administrator admin)  {
         admins.add(admin);
     }
 
-    public void removeAdmin(Administrator admin) {
+    public void removeAdministrator(Administrator admin) {
         admins.remove(admin);
     }
 
-    public void editUserInfo(User u) {
-        informAll(u);
-    }
-
-    protected final List<Administrator> getAdmins() {
+    public final List<Administrator> getAdministrators() {
         return admins;
     }
 
-    private void informAll(User u) {
+    public void updateUserInfo(User u) {
+        userDataService.update(u);
+        notifyAllAdministrators(u);
+    }
+
+    private void notifyAllAdministrators(User u) {
         for (Administrator a : admins) {
-            inform(a, u);
+            notifyAdministrator(a, u);
         }
     }
 
-    private void inform(Administrator a, User u) {
-
+    private void notifyAdministrator(Administrator a, User u) {
+        a.receiveMessage(MessageGenerator.updatePersonalInfoMessage(u.getUsername()));
     }
 
 }

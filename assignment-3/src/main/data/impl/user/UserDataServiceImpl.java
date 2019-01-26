@@ -3,6 +3,8 @@ package main.data.impl.user;
 import main.common.user.*;
 import main.data.service.user.UserDataService;
 
+import java.util.List;
+
 public class UserDataServiceImpl implements UserDataService {
 
     private static UserDataServiceImpl singleton = new UserDataServiceImpl();
@@ -44,32 +46,17 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public void update(Teacher u) {
-
-    }
-
-    @Override
-    public void update(Graduate u) {
-
-    }
-
-    @Override
-    public void update(Undergraduate u) {
-
-    }
-
-    @Override
-    public void update(Administrator u) {
-
-    }
-
-    @Override
     public void update(User u) {
 
     }
 
     @Override
     public User findByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public List<User> findAll() {
         return null;
     }
 

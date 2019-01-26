@@ -2,7 +2,7 @@ package main.util;
 
 import java.util.Date;
 
-public class DateTransfer {
+public class DateTranslator {
 
     public static Date before(Date d, int days) {
         if (d == null) {

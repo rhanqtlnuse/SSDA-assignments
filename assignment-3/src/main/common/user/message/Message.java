@@ -44,14 +44,16 @@ public class Message {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Message) {
-            Message that = (Message) o;
-            return content.equals(that.content)
-                    && receivedDate.equals(that.receivedDate)
-                    && (checked == that.checked);
-        } else {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        Message that = (Message) o;
+        return Objects.equals(content, that.content)
+                && Objects.equals(receivedDate, that.receivedDate)
+                && (checked == that.checked);
     }
 
     @Override
