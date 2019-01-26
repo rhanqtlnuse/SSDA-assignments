@@ -1,10 +1,10 @@
 package main.business.service;
 
-import main.common.user.UserType;
 import main.common.resultmessage.CancelResultMessage;
 import main.common.resultmessage.SignInResultMessage;
 import main.common.resultmessage.SignUpResultMessage;
-import main.common.user.*;
+import main.common.user.User;
+import main.common.user.UserType;
 
 public interface UserBusinessService {
 

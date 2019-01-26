@@ -3,11 +3,11 @@ package main.business.impl;
 import main.business.impl.user.PersonalInfoMediator;
 import main.business.impl.user.factory.*;
 import main.business.service.UserBusinessService;
-import main.common.user.UserType;
 import main.common.resultmessage.CancelResultMessage;
 import main.common.resultmessage.SignInResultMessage;
 import main.common.resultmessage.SignUpResultMessage;
-import main.common.user.*;
+import main.common.user.User;
+import main.common.user.UserType;
 import main.data.impl.user.UserDataServiceImpl;
 import main.data.service.user.UserDataService;
 

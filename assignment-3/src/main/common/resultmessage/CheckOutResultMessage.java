@@ -1,19 +1,34 @@
 package main.common.resultmessage;
 
-public enum CheckOutResultMessage {
+public final class CheckOutResultMessage extends ResultMessage {
 
-    SUCCEEDED("借阅成功"),
-    NO_BOOK("无可借书籍");
+    public static final CheckOutResultMessage SUCCEEDED =
+            new CheckOutResultMessage(
+                    "SUCCEEDED",
+                    0,
+                    "借阅成功"
+            );
+    public static final CheckOutResultMessage COND_NOT_SATISFIED =
+            new CheckOutResultMessage(
+                    "COND_NOT_SATISFIED",
+                    1,
+                    "级别不够"
+            );
+    public static final CheckOutResultMessage CANNOT_BORROW_MORE =
+            new CheckOutResultMessage(
+                    "CANNOT_BORROW_MORE",
+                    2,
+                    "借阅数已达上限"
+            );
+    public static final CheckOutResultMessage NO_BOOK =
+            new CheckOutResultMessage(
+                    "NO_BOOK",
+                    3,
+                    "无可借书籍"
+            );
 
-    private String literal;
-
-    CheckOutResultMessage(String literal) {
-        this.literal = literal;
-    }
-
-    @Override
-    public String toString() {
-        return literal;
+    private CheckOutResultMessage(String name, int ordinal, String literal) {
+        super(name, ordinal, literal);
     }
 
 }

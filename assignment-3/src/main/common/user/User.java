@@ -1,9 +1,11 @@
 package main.common.user;
 
-import main.common.Element;
+import main.common.book.CheckInRecord;
+import main.common.book.CheckOutRecord;
 import main.common.user.message.Message;
 import main.common.user.message.MessageBox;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,13 +14,17 @@ public abstract class User {
     private String username;
     private String password;
 
-    private int limit;
-    private int borrowed;
+    private int countLimitation;
+    private int periodLimitation;
+    private int borrowedCount;
 
     private boolean online;
     private boolean active;
 
     private MessageBox messageBox;
+
+    private List<CheckOutRecord> checkOutRecords;
+    private List<CheckInRecord> checkInRecords;
 
     protected User(String username, String password) {
         this.username = username;
@@ -26,8 +32,10 @@ public abstract class User {
         this.online = false;
         this.active = true;
         this.messageBox = new MessageBox();
-        // limit 的设定交给子类
-        this.borrowed = 0;
+        // countLimitation 和 periodLimitation 的设定交给子类
+        this.borrowedCount = 0;
+        this.checkOutRecords = new ArrayList<>();
+        this.checkInRecords = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -46,20 +54,27 @@ public abstract class User {
         this.password = password;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getCountLimitation() {
+        return countLimitation;
     }
 
-    protected void setLimit(int limit) {
-        this.limit = limit;
+    protected void setCountLimitation(int countLimitation) {
+        this.countLimitation = countLimitation;
     }
 
-    public int getBorrowed() {
-        return borrowed;
+    public int getPeriodLimitation() {
+        return periodLimitation;
     }
 
-    public void setBorrowed(int borrowed) {
-        this.borrowed = borrowed;
+    protected void setPeriodLimitation(int periodLimitation) {
+        this.periodLimitation = periodLimitation;
+    }
+    public int getBorrowedCount() {
+        return borrowedCount;
+    }
+
+    public void setBorrowedCount(int borrowedCount) {
+        this.borrowedCount = borrowedCount;
     }
 
     public boolean isOnline() {
@@ -90,8 +105,20 @@ public abstract class User {
         messageBox.check(msg);
     }
 
+    public void uncheckMessage(Message msg) {
+        messageBox.uncheck(msg);
+    }
+
     public List<Message> getMessageList() {
         return messageBox.getMessages();
+    }
+
+    public List<CheckOutRecord> getCheckOutRecords() {
+        return checkOutRecords;
+    }
+
+    public List<CheckInRecord> getCheckInRecords() {
+        return checkInRecords;
     }
 
     @Override
@@ -113,6 +140,9 @@ public abstract class User {
         return getClass().getSimpleName() + '['
                 + "username='" + username + '\'' + ", "
                 + "password='" + password + '\'' + ", "
+                + "countLimitation=" + countLimitation + ", "
+                + "periodLimitation=" + periodLimitation + ", "
+                + "borrowedCount=" + borrowedCount + ", "
                 + "online=" + online + ", "
                 + "active=" + active
                 + ']';

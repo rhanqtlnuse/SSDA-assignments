@@ -1,8 +1,6 @@
 package main.business.impl.user.factory;
 
 import main.common.user.Teacher;
-import main.common.user.Undergraduate;
-import main.common.user.User;
 
 public class TeacherFactory extends UserFactory {
 

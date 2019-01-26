@@ -10,17 +10,25 @@ public class Book {
     private List<String> categories;
     private String contentURL;
 
+    private Level level;
+
     private int outCount;
     private int remainingCount;
 
-    public Book(String isbn, String title, String author, List<String> categories, String contentURL, int count) {
+    private boolean active;
+
+    public Book(String isbn, String title, String author,
+                List<String> categories, String contentURL,
+                Level level, int count) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.categories = categories;
         this.contentURL = contentURL;
+        this.level = level;
         this.outCount = 0;
         this.remainingCount = count;
+        this.active = true;
     }
 
     public String getIsbn() {
@@ -43,6 +51,10 @@ public class Book {
         return contentURL;
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     public int getOutCount() {
         return outCount;
     }
@@ -57,6 +69,14 @@ public class Book {
 
     public void setRemainingCount(int remainingCount) {
         this.remainingCount = remainingCount;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
 }
