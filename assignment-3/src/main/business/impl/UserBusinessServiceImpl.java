@@ -6,7 +6,7 @@ import main.business.impl.user.factory.GraduateFactory;
 import main.business.impl.user.factory.TeacherFactory;
 import main.business.impl.user.factory.UndergraduateFactory;
 import main.business.service.UserBusinessService;
-import main.common.UserType;
+import main.common.user.UserType;
 import main.common.message.CancelResultMessage;
 import main.common.message.SignInResultMessage;
 import main.common.message.SignUpResultMessage;
@@ -15,8 +15,6 @@ import main.data.impl.user.UserDataServiceImpl;
 import main.data.service.user.UserDataService;
 
 /**
- * TODO
- *
  * 用户管理业务逻辑实现类
  *
  * @author HanQi
@@ -93,9 +91,41 @@ public class UserBusinessServiceImpl implements UserBusinessService {
         return userDataService.findByUsername(username);
     }
 
+    /**
+     * 目前选择直接对主数据库进行修改登录状态，有以下两种修改方案：
+     * 1. 类似缓存的机制，将登录信息载入辅数据库（slave）
+     * 2. 强制登陆，踢出已登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 登录信息
+     * @see SignInResultMessage
+     */
     @Override
     public SignInResultMessage signIn(String username, String password) {
+        User u = findByUsername(username);
+        if (u == null) {
+            return SignInResultMessage.USERNAME_NOT_EXISTS;
+        }
+        if (!password.equals(u.getPassword())) {
+            return SignInResultMessage.WRONG_PASSWORD;
+        }
+        if (!u.isActive()) {
+            return SignInResultMessage.INVALID_ACCOUNT;
+        }
+        if (u.isOnline()) {
+            return SignInResultMessage.DUPLICATE_SIGN_IN;
+        }
+        u.setOnline(true);
+        userDataService.update(u);
         return SignInResultMessage.SUCCEEDED;
+    }
+
+    @Override
+    public void signOut(String username) {
+        User u = findByUsername(username);
+        u.setOnline(false);
+        userDataService.update(u);
     }
 
 }

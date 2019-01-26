@@ -1,7 +1,7 @@
 package main.business.impl;
 
 import main.business.service.BookBusinessService;
-import main.common.Book;
+import main.common.book.Book;
 import main.common.message.BookManagementResultMessage;
 import main.data.impl.book.BookDataServiceImpl;
 import main.data.service.book.BookDataService;

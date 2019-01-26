@@ -15,6 +15,7 @@ public interface UserDataService {
     void update(Graduate u);
     void update(Undergraduate u);
     void update(Administrator u);
+    void update(User u);
 
     User findByUsername(String username);
 

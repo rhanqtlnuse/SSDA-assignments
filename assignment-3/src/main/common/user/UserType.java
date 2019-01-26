@@ -1,4 +1,4 @@
-package main.common;
+package main.common.user;
 
 public enum UserType {
 

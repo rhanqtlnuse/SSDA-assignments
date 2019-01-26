@@ -1,7 +1,6 @@
 package main.business.impl.user;
 
-import main.common.user.Administrator;
-import main.common.user.User;
+import main.common.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,22 @@ public class PersonalInfoMediator {
         admins.remove(admin);
     }
 
-    public void editUserInfo(User u) {
+    public void editUserInfo(Teacher u) {
+        // store
+        informAll(u);
+    }
+
+    public void editUserInfo(Graduate u) {
+        // store
+        informAll(u);
+    }
+
+    public void editUserInfo(Undergraduate u) {
+        // store
+        informAll(u);
+    }
+
+    public void editUserInfo(Administrator u) {
         // store
         informAll(u);
     }

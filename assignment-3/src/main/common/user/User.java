@@ -32,7 +32,7 @@ public abstract class User implements Element {
         this.username = username;
     }
 
-    protected String getPassword() {
+    public String getPassword() {
         return password;
     }
 

@@ -59,8 +59,13 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public void findByUsername(String username) {
+    public void update(User u) {
 
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return null;
     }
 
 }

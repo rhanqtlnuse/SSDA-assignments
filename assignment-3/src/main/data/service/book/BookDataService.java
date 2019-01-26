@@ -1,6 +1,6 @@
 package main.data.service.book;
 
-import main.common.Book;
+import main.common.book.Book;
 
 import java.util.List;
 

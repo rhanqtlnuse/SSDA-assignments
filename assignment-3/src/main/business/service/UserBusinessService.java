@@ -1,6 +1,6 @@
 package main.business.service;
 
-import main.common.UserType;
+import main.common.user.UserType;
 import main.common.message.CancelResultMessage;
 import main.common.message.SignInResultMessage;
 import main.common.message.SignUpResultMessage;
@@ -20,5 +20,6 @@ public interface UserBusinessService {
     User findByUsername(String username);
 
     SignInResultMessage signIn(String username, String password);
+    void signOut(String username);
 
 }
