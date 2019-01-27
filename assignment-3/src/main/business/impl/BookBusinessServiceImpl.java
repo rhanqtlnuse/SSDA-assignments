@@ -1,15 +1,12 @@
 package main.business.impl;
 
 import main.business.service.BookBusinessService;
-import main.common.user.visitor.CheckOutVisitor;
 import main.common.book.Book;
 import main.common.book.CheckInRecord;
 import main.common.resultmessage.BookManagementResultMessage;
 import main.common.resultmessage.CheckOutResultMessage;
-import main.common.user.Graduate;
-import main.common.user.Teacher;
-import main.common.user.Undergraduate;
 import main.common.user.User;
+import main.common.user.visitor.CheckOutVisitor;
 import main.data.impl.book.BookDataServiceImpl;
 import main.data.impl.user.UserDataServiceImpl;
 import main.data.service.book.BookDataService;
@@ -89,17 +86,7 @@ public class BookBusinessServiceImpl implements BookBusinessService {
     }
 
     @Override
-    public CheckOutResultMessage checkOut(Teacher u, Book b) {
-        return (CheckOutResultMessage) u.accept(new CheckOutVisitor(b));
-    }
-
-    @Override
-    public CheckOutResultMessage checkOut(Graduate u, Book b) {
-        return (CheckOutResultMessage) u.accept(new CheckOutVisitor(b));
-    }
-
-    @Override
-    public CheckOutResultMessage checkOut(Undergraduate u, Book b) {
+    public CheckOutResultMessage checkOut(User u, Book b) {
         return (CheckOutResultMessage) u.accept(new CheckOutVisitor(b));
     }
 
