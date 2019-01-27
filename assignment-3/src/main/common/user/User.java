@@ -4,12 +4,13 @@ import main.common.book.CheckInRecord;
 import main.common.book.CheckOutRecord;
 import main.common.user.message.Message;
 import main.common.user.message.MessageBox;
+import main.common.user.visitor.Element;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class User {
+public abstract class User implements Element {
 
     private String username;
     private String password;

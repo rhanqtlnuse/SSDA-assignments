@@ -26,6 +26,12 @@ public final class CheckOutResultMessage extends ResultMessage {
                     3,
                     "无可借书籍"
             );
+    public static final CheckOutResultMessage NOT_ALLOWED =
+            new CheckOutResultMessage(
+                    "NOT_ALLOWED",
+                    4,
+                    "不允许"
+            );
 
     private CheckOutResultMessage(String name, int ordinal, String literal) {
         super(name, ordinal, literal);

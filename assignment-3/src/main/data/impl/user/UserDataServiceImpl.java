@@ -148,17 +148,4 @@ public class UserDataServiceImpl implements UserDataService {
         return res;
     }
 
-    public static void main(String[] args) {
-        Set<User> s = new HashSet<>();
-        s.add(new Teacher("IN968720", "123456"));
-        s.add(new Teacher("IN173947", "123456"));
-        s.add(new Graduate("MF832042", "987654"));
-        s.add(new Graduate("MF731325", "987654321"));
-        System.out.println(s);
-        System.out.println(s.remove(new Graduate("MF731325", "")));
-        System.out.println(s.remove(new Graduate("MF000000", "")));
-        s.add(new Graduate("MF731325", "000000"));
-        System.out.println(s);
-    }
-
 }

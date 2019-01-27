@@ -1,10 +1,9 @@
 package main.common.user;
 
-import main.common.user.visitor.Element;
-import main.common.user.visitor.Visitor;
 import main.common.resultmessage.ResultMessage;
+import main.common.user.visitor.Visitor;
 
-public class Undergraduate extends User implements Element {
+public class Undergraduate extends User {
 
     private static final int UNDERGRADUATE_CHECK_OUT_COUNT_LIMIT = 5;
     private static final int UNDERGRADUATE_CHECK_OUT_PERIOD_LIMIT = 30;
