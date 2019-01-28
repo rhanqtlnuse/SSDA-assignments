@@ -7,17 +7,23 @@ import main.common.user.User;
 
 public class UserItem {
     private String username;
+    private String name;
     private String identity;
+    private String gender;
     private int countLimitation;
     private int periodLimitation;
+    private String forfeit;
     private int borrowedCount;
 
     public UserItem() {}
 
     public UserItem(User user) {
         this.username = user.getUsername();
+        this.name = "";
+        this.gender = "";
         this.countLimitation = user.getCountLimitation();
         this.periodLimitation = user.getPeriodLimitation();
+        this.forfeit = "0";
         this.borrowedCount = user.getBorrowedCount();
         switch (user.getClass().getSimpleName()) {
             case "Undergraduate": this.identity = "本科生"; break;
@@ -66,5 +72,29 @@ public class UserItem {
 
     public void setBorrowedCount(int borrowedCount) {
         this.borrowedCount = borrowedCount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getForfeit() {
+        return forfeit;
+    }
+
+    public void setForfeit(String forfeit) {
+        this.forfeit = forfeit;
     }
 }

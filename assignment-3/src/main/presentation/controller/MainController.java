@@ -8,17 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import main.business.impl.BookBusinessServiceImpl;
-import main.business.impl.ReaderBusinessServiceImpl;
 import main.business.impl.UserBusinessServiceImpl;
 import main.business.service.BookBusinessService;
-import main.business.service.ReaderBusinessService;
 import main.business.service.UserBusinessService;
 import main.common.book.Book;
 import main.common.book.CheckOutRecord;
@@ -29,10 +23,9 @@ import main.common.resultmessage.CheckOutResultMessage;
 import main.common.resultmessage.SignUpResultMessage;
 import main.common.user.*;
 import main.common.user.message.Message;
-import main.presentation.Login;
+import main.Login;
 import main.presentation.entity.*;
 
-import java.io.Reader;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1274,6 +1267,7 @@ public class MainController implements Initializable {
         ObservableList<UserItem> users = FXCollections.observableArrayList();
         for(User u : userBusinessService.findAll()) {
             users.add(new UserItem(u));
+            System.out.println(u.toString());
         }
         tbv_reader.setItems(users);
     }

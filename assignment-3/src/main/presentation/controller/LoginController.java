@@ -4,21 +4,14 @@ import com.jfoenix.controls.*;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import main.business.impl.UserBusinessServiceImpl;
 import main.business.service.UserBusinessService;
 import main.common.resultmessage.SignInResultMessage;
-import main.common.resultmessage.SignUpResultMessage;
 import main.common.user.*;
-import main.presentation.Login;
+import main.Login;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -96,7 +89,7 @@ public class LoginController implements Initializable {
         SignInResultMessage resultMessage = userBusinessService.signIn(username, password);
         if(SignInResultMessage.SUCCEEDED == resultMessage) {
             User user = userBusinessService.findByUsername(username);
-            if(user.getClass().getSimpleName().equals(UserType.ADMINISTRATOR.toString())) {
+            if(user.getClass().getSimpleName().equals("Administrator")) {
                 myApp.gotoMainUi(username);
             }
             else {
