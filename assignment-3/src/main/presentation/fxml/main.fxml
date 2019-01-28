@@ -344,14 +344,13 @@
                 <Tab text="所有借阅记录">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="658.0">
                         <children>
-                            <TableView fx:id="tbv_borrow" layoutX="14.0" layoutY="45.0" prefHeight="320.0" prefWidth="635.0">
+                            <TableView fx:id="tbv_borrow_name" layoutX="14.0" layoutY="45.0" prefHeight="320.0" prefWidth="635.0">
                                 <columns>
-                                    <TableColumn fx:id="tb_column_borrow_id" prefWidth="107.0" text="借阅流水号" />
-                                    <TableColumn fx:id="tb_column_borrow_bookId" prefWidth="124.0" text="图书" />
-                                    <TableColumn fx:id="tb_column_borrow_readerId" prefWidth="126.0" text="读者" />
-                                    <TableColumn fx:id="tb_column_borrow_borrowDate" prefWidth="111.0" text="借出时间" />
-                                    <TableColumn fx:id="tb_column_borrow_backDate" prefWidth="89.0" text="到期时间" />
-                                    <TableColumn fx:id="tb_column_borrow_isBack" prefWidth="77.0" text="是否归还" />
+                                    <TableColumn fx:id="tb_column_borrow_bookId" prefWidth="168.0" text="ISBN" />
+                                    <TableColumn fx:id="tb_column_borrow_bookName" prefWidth="128.0" text="书名" />
+                                    <TableColumn fx:id="tb_column_borrow_readerId" prefWidth="92.0" text="读者" />
+                                    <TableColumn fx:id="tb_column_borrow_borrowDate" prefWidth="126.0" text="借出时间" />
+                                    <TableColumn fx:id="tb_column_borrow_backDate" prefWidth="120.0" text="到期时间" />
                                 </columns>
                             </TableView>
                             <JFXButton layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#getAllBorrowedRecordings" prefHeight="23.0" prefWidth="65.0" text="刷新" />

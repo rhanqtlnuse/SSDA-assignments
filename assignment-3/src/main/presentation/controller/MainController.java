@@ -85,17 +85,16 @@ public class MainController implements Initializable {
     @FXML
     private TableView tbv_borrow;//借阅列表
     @FXML
-    private TableColumn tb_column_borrow_id;
-    @FXML
     private TableColumn tb_column_borrow_bookId;
+    @FXML
+    private TableColumn tb_column_borrow_bookName;
     @FXML
     private TableColumn tb_column_borrow_readerId;
     @FXML
     private TableColumn tb_column_borrow_borrowDate;
     @FXML
     private TableColumn tb_column_borrow_backDate;
-    @FXML
-    private TableColumn tb_column_borrow_isBack;
+
 
 
     //借书---图书信息
@@ -405,12 +404,11 @@ public class MainController implements Initializable {
         tb_column_reader_forfeit.setCellValueFactory(new PropertyValueFactory("forfeit"));
         tb_column_reader_borrowed_books.setCellFactory(new PropertyValueFactory("borrowedBook"));
 
-        tb_column_borrow_id.setCellValueFactory(new PropertyValueFactory("id"));
         tb_column_borrow_bookId.setCellValueFactory(new PropertyValueFactory("bookId"));
         tb_column_borrow_readerId.setCellValueFactory(new PropertyValueFactory("readerId"));
         tb_column_borrow_borrowDate.setCellValueFactory(new PropertyValueFactory("borrowDate"));
         tb_column_borrow_backDate.setCellValueFactory(new PropertyValueFactory("backDate"));
-        tb_column_borrow_isBack.setCellValueFactory(new PropertyValueFactory("isBack"));
+        tb_column_borrow_bookName.setCellValueFactory(new PropertyValueFactory("title"));
 
         tb_column_huanshu_bookId.setCellValueFactory(new PropertyValueFactory("bookId"));
         tb_column_huanshu_bookName.setCellValueFactory(new PropertyValueFactory("bookName"));
@@ -1279,6 +1277,7 @@ public class MainController implements Initializable {
         ObservableList<CheckOutRecordItem> records = FXCollections.observableArrayList();
         for(CheckOutRecord r : userBusinessService.getAllCheckOutRecords()) {
             records.add(new CheckOutRecordItem(r));
+            System.out.println(r.toString());
         }
         tbv_borrow.setItems(records);
     }
