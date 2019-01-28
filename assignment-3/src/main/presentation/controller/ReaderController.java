@@ -15,8 +15,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import main.business.impl.BookBusinessServiceImpl;
+import main.business.impl.ReaderBusinessServiceImpl;
 import main.business.impl.UserBusinessServiceImpl;
 import main.business.service.BookBusinessService;
+import main.business.service.ReaderBusinessService;
 import main.business.service.UserBusinessService;
 import main.common.book.Book;
 import main.common.book.CheckOutRecord;
@@ -99,6 +101,8 @@ public class ReaderController implements Initializable {
     private UserBusinessService userBusinessService = UserBusinessServiceImpl.getInstance();
 
     private BookBusinessService bookBusinessService = BookBusinessServiceImpl.getInstance();
+
+    private ReaderBusinessService readerBusinessService = ReaderBusinessServiceImpl.getInstance();
 
     public void setApp(Login myApp) {
         this.myApp = myApp;
