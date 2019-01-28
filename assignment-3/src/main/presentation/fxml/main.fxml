@@ -38,7 +38,7 @@
                                         <font>
                                             <Font name="System Bold Italic" size="15.0" />
                                         </font></Label>
-                                    <Label layoutX="381.0" layoutY="182.0" text="读者姓名" textFill="DARKORANGE" />
+                                    <Label layoutX="381.0" layoutY="182.0" text="读者类别" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_js_reader_id" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="437.0" layoutY="128.0" />
                                     <JFXTextField fx:id="tf_js_reader_name" alignment="CENTER" editable="false" layoutX="437.0" layoutY="174.0" />
                                     <Separator layoutX="63.0" layoutY="112.0" prefWidth="220.0" />
@@ -48,8 +48,8 @@
                                     <Label layoutX="63.0" layoutY="178.0" text="图书名称" textFill="DARKORANGE" />
                                     <Label layoutX="69.0" layoutY="225.0" text="作者" textFill="DARKORANGE" />
                                     <Label layoutX="63.0" layoutY="271.0" text="图书类别" textFill="DARKORANGE" />
-                                    <Label layoutX="381.0" layoutY="225.0" text="读者类别" textFill="DARKORANGE" />
-                                    <Label layoutX="381.0" layoutY="271.0" text="读者性别" textFill="DARKORANGE" />
+                                    <Label layoutX="381.0" layoutY="225.0" text="可借数量" textFill="DARKORANGE" />
+                                    <Label layoutX="381.0" layoutY="271.0" text="可借天数" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_js_book_name" alignment="CENTER" editable="false" layoutX="120.0" layoutY="174.0" />
                                     <JFXTextField fx:id="tf_js_book_publisher" alignment="CENTER" editable="false" layoutX="120.0" layoutY="221.0" />
                                     <JFXTextField fx:id="tf_js_reader_type" alignment="CENTER" editable="false" layoutX="437.0" layoutY="221.0" />
@@ -93,7 +93,7 @@
                                         <font>
                                             <Font name="System Bold Italic" size="15.0" />
                                         </font></Label>
-                                    <Label layoutX="76.0" layoutY="169.0" text="读者姓名" textFill="DARKORANGE" />
+                                    <Label layoutX="76.0" layoutY="169.0" text="读者类别" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_hs_reader_id" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="131.0" layoutY="129.0" />
                                     <JFXTextField fx:id="tf_hs_reader_name" alignment="CENTER" editable="false" layoutX="132.0" layoutY="161.0" />
                                     <Separator layoutX="63.0" layoutY="112.0" prefWidth="220.0" />
@@ -101,8 +101,8 @@
                                     <Label layoutX="464.0" layoutY="81.0" text="借书信息" />
                                     <Separator layoutX="335.0" layoutY="112.0" prefHeight="3.0" prefWidth="300.0" />
                                     <Label layoutX="334.0" layoutY="320.0" text="图书名称" textFill="DARKORANGE" />
-                                    <Label layoutX="76.0" layoutY="197.0" text="读者类别" textFill="DARKORANGE" />
-                                    <Label layoutX="76.0" layoutY="228.0" text="读者性别" textFill="DARKORANGE" />
+                                    <Label layoutX="76.0" layoutY="197.0" text="可借数量" textFill="DARKORANGE" />
+                                    <Label layoutX="76.0" layoutY="228.0" text="可借天数" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_hs_book_name" alignment="CENTER" editable="false" layoutX="402.0" layoutY="309.0" />
                                     <JFXTextField fx:id="tf_hs_reader_type" alignment="CENTER" editable="false" layoutX="132.0" layoutY="193.0" />
                                     <JFXTextField fx:id="tf_hs_reader_sex" alignment="CENTER" editable="false" layoutX="132.0" layoutY="224.0" />
@@ -123,7 +123,7 @@
                         </ScrollPane>
                     </content>
                 </Tab>
-                <Tab text="图书信息维护">
+                <Tab text="图书">
                     <ScrollPane layoutX="120.0" layoutY="128.0" prefHeight="200.0" prefWidth="200.0">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="656.0">
                             <children>
@@ -219,7 +219,7 @@
                     </ScrollPane>
 
                 </Tab>
-                <Tab text="读者信息维护">
+                <Tab text="读者">
                     <ScrollPane layoutX="120.0" layoutY="128.0" prefHeight="200.0" prefWidth="200.0">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="658.0">
                             <children>
@@ -309,13 +309,13 @@
                         <children>
                             <TableView fx:id="tbv_book" layoutX="14.0" layoutY="45.0" prefHeight="320.0" prefWidth="635.0">
                                 <columns>
-                                    <TableColumn fx:id="tb_column_book_id" prefWidth="75.0" text="ISBN" />
-                                    <TableColumn fx:id="tb_column_book_name" prefWidth="89.0" text="图书名称" />
-                                    <TableColumn fx:id="tb_column_book_type" prefWidth="69.0" text="图书类别" />
-                                    <TableColumn fx:id="tb_column_book_author" prefWidth="64.0" text="作者" />
-                                    <TableColumn fx:id="tb_column_book_level" prefWidth="69.0" text="图书等级" />
-                                    <TableColumn fx:id="tb_column_book_outCount" prefWidth="92.0" text="借出数目" />
-                                    <TableColumn fx:id="tb_column_book_remainingCount" prefWidth="84.0" text="库存数量" />
+                                    <TableColumn fx:id="tb_column_book_id" prefWidth="101.0" text="ISBN" />
+                                    <TableColumn fx:id="tb_column_book_name" prefWidth="106.0" text="图书名称" />
+                                    <TableColumn fx:id="tb_column_book_type" prefWidth="145.0" text="图书类别" />
+                                    <TableColumn fx:id="tb_column_book_author" prefWidth="72.0" text="作者" />
+                                    <TableColumn fx:id="tb_column_book_level" prefWidth="70.0" text="图书等级" />
+                                    <TableColumn fx:id="tb_column_book_outCount" prefWidth="69.0" text="借出数目" />
+                                    <TableColumn fx:id="tb_column_book_remainingCount" prefWidth="71.0" text="库存数量" />
                                 </columns>
                             </TableView>
                             <JFXButton layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#getAllBooks" prefHeight="23.0" prefWidth="65.0" text="刷新" />
@@ -334,7 +334,7 @@
                                     <TableColumn fx:id="tb_column_reader_numbers" prefWidth="75.0" text="可借数量" />
                                     <TableColumn fx:id="tb_column_reader_days" prefWidth="75.0" text="可借天数" />
                                     <TableColumn fx:id="tb_column_reader_forfeit" prefWidth="75.0" text="罚款金额" />
-                                    <TableColumn fx:id="tb_column_reader_borrowed_books" prefWidth="75.0" text="已借数量" />
+                                    <TableColumn fx:id="tb_column_reader_borrowed_books" prefWidth="109.0" text="已借数量" />
                                 </columns>
                             </TableView>
                             <JFXButton layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#getAllReaders" prefHeight="23.0" prefWidth="65.0" text="刷新" />
@@ -355,6 +355,15 @@
                                 </columns>
                             </TableView>
                             <JFXButton layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#getAllBorrowedRecordings" prefHeight="23.0" prefWidth="65.0" text="刷新" />
+                        </children>
+                    </AnchorPane>
+                </Tab>
+                <Tab text="消息">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="658.0">
+                        <children>
+                            <TableView fx:id="tbv_message" layoutX="14.0" layoutY="45.0" prefHeight="320.0" prefWidth="635.0">
+                            </TableView>
+                            <JFXButton layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#getMessage" prefHeight="23.0" prefWidth="65.0" text="刷新" />
                         </children>
                     </AnchorPane>
                 </Tab>

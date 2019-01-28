@@ -338,6 +338,10 @@ public class MainController implements Initializable {
         }
     }
 
+    public void getMessage() {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -381,8 +385,8 @@ public class MainController implements Initializable {
         //图书维护---初始化
         initBookAddUi();
 
-        //读者维护---初始化
-        initReaderAddUi();
+//        //读者维护---初始化
+//        initReaderAddUi();
 
         //所有书目列表初始化
         tb_column_book_id.setCellValueFactory(new PropertyValueFactory("ISBN"));
@@ -730,17 +734,17 @@ public class MainController implements Initializable {
             if(!newVal) tf_ts_add_book_outCount.validate();
         });
 
-        tf_ts_add.getValidators().add(validator_ts_book_add);
-        tf_ts_add_book_price.focusedProperty().addListener((o,oldVal,newVal)->{
-            if(!newVal) tf_ts_add_book_price.validate();
-        });
-
-        tf_ts_add_book_stock.getValidators().add(validator_ts_book_add);
-        tf_ts_add_book_stock.focusedProperty().addListener((o,oldVal,newVal)->{
-            if(!newVal) tf_ts_add_book_stock.validate();
-        });
-
-        cb_ts_add_book_type.getSelectionModel().selectFirst();
+//        tf_ts_add.getValidators().add(validator_ts_book_add);
+//        tf_ts_add_book_price.focusedProperty().addListener((o,oldVal,newVal)->{
+//            if(!newVal) tf_ts_add_book_price.validate();
+//        });
+//
+//        tf_ts_add_book_stock.getValidators().add(validator_ts_book_add);
+//        tf_ts_add_book_stock.focusedProperty().addListener((o,oldVal,newVal)->{
+//            if(!newVal) tf_ts_add_book_stock.validate();
+//        });
+//
+//        cb_ts_add_book_type.getSelectionModel().selectFirst();
 
         //////*****//////
         tf_ts_alter_book_search_id.getValidators().add(validator_ts_book_add);
@@ -755,611 +759,611 @@ public class MainController implements Initializable {
 
     }
 
-    /**
-     * 图书信息维护界面-----添加
-     * 添加按钮点击事件
-     */
-    @FXML
-    public void ts_book_add() {
-        System.out.println("info====>  "+tf_ts_add_book_id.getText() + tf_ts_add_book_name.getText()+tf_ts_add_book_author.getText()+tf_ts_add_book_translator.getText()+tf_ts_add_book_publisher.getText()+
-                tf_ts_add_book_price.getText()+tf_ts_add_book_stock.getText()+cb_ts_add_book_type.getSelectionModel().getSelectedItem().toString()+dp_ts_add_book_publish_time.getEditor().getText());
-        if (!tf_ts_add_book_id.getText().equals("") && !tf_ts_add_book_name.getText().equals("") && !tf_ts_add_book_author.getText().equals("") && !tf_ts_add_book_translator.getText().equals("") && !tf_ts_add_book_publisher.getText().equals("") &&
-                !tf_ts_add_book_price.getText().equals("") && !tf_ts_add_book_stock.getText().equals("") && !cb_ts_add_book_type.getSelectionModel().getSelectedItem().toString().equals("") && !dp_ts_add_book_publish_time.getEditor().getText().equals("")) {
-            Book book = new Book();
-            book.setId(tf_ts_add_book_id.getText());
-            book.setName(tf_ts_add_book_name.getText());
-            book.setType(Constant.BOOK_TYPE.get(cb_ts_add_book_type.getSelectionModel().getSelectedItem().toString()));
-            book.setAuthor(tf_ts_add_book_author.getText());
-            book.setTranslator(tf_ts_add_book_translator.getText());
-            book.setPublisher(tf_ts_add_book_publisher.getText());
-            book.setPublishTime(dp_ts_add_book_publish_time.getEditor().getText());
-            book.setStock(Integer.parseInt(tf_ts_add_book_stock.getText()));
-            book.setPrice(Double.parseDouble(tf_ts_add_book_price.getText()));
-            Boolean isok = DataBaseUtil.addNewBook(book);
-            if (isok) {
-                System.out.println("add ok");
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("添加成功！");
-                alert.setTitle("添加成功！");
-                alert.show();
-                ts_book_add_clear();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("添加失败！");
-                alert.setTitle("添加失败！");
-                alert.show();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("信息不完整！");
-            alert.setTitle("添加错误！");
-            alert.show();
-        }
-    }
-
-    /**
-     * 图书信息维护界面-----添加
-     * 清楚按钮点击事件
-     */
-    @FXML
-    private void ts_book_add_clear() {
-        tf_ts_add_book_id.setText("");
-        tf_ts_add_book_name.setText("");
-//        cb_ts_add_book_type.getSelectionModel().clearSelection();
-        tf_ts_add_book_author.setText("");
-        tf_ts_add_book_translator.setText("");
-        tf_ts_add_book_publisher.setText("");
-        dp_ts_add_book_publish_time.getEditor().setText("");
-        tf_ts_add_book_stock.setText("");
-        tf_ts_add_book_price.setText("");
-    }
-
-    /**
-     * 图书维护---修改---查询图书
-     */
-    @FXML
-    public void ts_book_alter_search() {
-        if (!tf_ts_alter_book_search_id.getText().equals("")) {
-            Book book = DataBaseUtil.getBook(tf_ts_alter_book_search_id.getText().trim());
-            if (book != null) {
-                tf_ts_alter_book_id.setText(book.getId());
-                tf_ts_alter_book_name.setText(book.getName());
-                cb_ts_alter_book_type.getSelectionModel().select(getBookTypeSelectNumber(book.getType()));
-                tf_ts_alter_book_author.setText(book.getAuthor());
-                tf_ts_alter_book_translator.setText(book.getTranslator());
-                tf_ts_alter_book_publisher.setText(book.getPublisher());
-                tp_ts_alter_book_publish_time.getEditor().setText(book.getPublishTime());
-                tf_ts_alter_book_price.setText("" + book.getPrice());
-                tf_ts_alter_book_stock.setText("" + book.getStock());
-            } else {
-                tf_ts_alter_book_search_id.setText("");
-                tf_ts_alter_book_search_id.validate();
-            }
-        }
-    }
-
-    /**
-     * 图书维护---修改
-     */
-    @FXML
-    public void ts_book_alter_start() {
-        if (!tf_ts_alter_book_id.getText().equals("") && !tf_ts_alter_book_name.getText().equals("") && !tf_ts_alter_book_author.getText().equals("") && !tf_ts_alter_book_translator.getText().equals("") && !tf_ts_alter_book_publisher.getText().equals("") &&
-                !tf_ts_alter_book_price.getText().equals("") && !tf_ts_alter_book_stock.getText().equals("") && !cb_ts_alter_book_type.getSelectionModel().getSelectedItem().toString().equals("") && !tp_ts_alter_book_publish_time.getEditor().getText().equals("")) {
-            Book book = new Book();
-            book.setId(tf_ts_alter_book_id.getText());
-            book.setName(tf_ts_alter_book_name.getText());
-            book.setType(getBookIdAccordingToSelectNumber(cb_ts_alter_book_type.getSelectionModel().getSelectedIndex()));
-            book.setAuthor(tf_ts_alter_book_author.getText());
-            book.setTranslator(tf_ts_alter_book_translator.getText());
-            book.setPublisher(tf_ts_alter_book_publisher.getText());
-            book.setPublishTime(tp_ts_alter_book_publish_time.getEditor().getText());
-            book.setStock(Integer.parseInt(tf_ts_alter_book_stock.getText()));
-            book.setPrice(Double.parseDouble(tf_ts_alter_book_price.getText()));
-            Boolean isok = DataBaseUtil.alterBook(book);
-            if (isok) {
-                System.out.println("alter ok");
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("修改成功！");
-                alert.setTitle("修改成功！");
-                alert.show();
-                ts_book_alter_clear();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("修改失败！");
-                alert.setTitle("修改失败！");
-                alert.show();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("信息不完整！");
-            alert.setTitle("修改错误！");
-            alert.show();
-        }
-    }
-
-    /**
-     * 图书信息维护界面-----修改
-     * 清楚按钮点击事件
-     */
-    @FXML
-    private void ts_book_alter_clear() {
-        tf_ts_alter_book_id.setText("");
-        tf_ts_alter_book_name.setText("");
-//        cb_ts_alter_book_type.getSelectionModel().clearSelection();
-        tf_ts_alter_book_author.setText("");
-        tf_ts_alter_book_translator.setText("");
-        tf_ts_alter_book_publisher.setText("");
-        tp_ts_alter_book_publish_time.getEditor().setText("");
-        tf_ts_alter_book_stock.setText("");
-        tf_ts_alter_book_price.setText("");
-    }
-
-
-    /**
-     * 图书维护---删除---查询图书
-     */
-    @FXML
-    public void ts_book_delete_search() {
-        if (!tf_ts_delete_book_search_id.getText().equals("")) {
-            Book book = DataBaseUtil.getBook(tf_ts_delete_book_search_id.getText().trim());
-            if (book != null) {
-                tf_ts_delete_book_id.setText(book.getId());
-                tf_ts_delete_book_name.setText(book.getName());
-                cb_ts_delete_book_type.getSelectionModel().select(getBookTypeSelectNumber(book.getType()));
-                tf_ts_delete_book_author.setText(book.getAuthor());
-                tf_ts_delete_book_translator.setText(book.getTranslator());
-                tf_ts_delete_book_publisher.setText(book.getPublisher());
-                tf_ts_delete_book_publish_time.setText(book.getPublishTime());
-                tf_ts_delete_book_price.setText("" + book.getPrice());
-                tf_ts_delete_book_stock.setText("" + book.getStock());
-            } else {
-                tf_ts_delete_book_search_id.setText("");
-                tf_ts_delete_book_search_id.validate();
-            }
-        }
-
-    }
-
-    /**
-     * 图书维护---删除--按钮
-     */
-    @FXML
-    public void ts_book_delete() {
-        if (!tf_ts_delete_book_id.getText().equals("")) {
-            Book book = new Book();
-            book.setId(tf_ts_delete_book_id.getText());
-            book.setName(tf_ts_delete_book_name.getText());
-            book.setType(getBookIdAccordingToSelectNumber(cb_ts_delete_book_type.getSelectionModel().getSelectedIndex()));
-            book.setAuthor(tf_ts_delete_book_author.getText());
-            book.setTranslator(tf_ts_delete_book_translator.getText());
-            book.setPublisher(tf_ts_delete_book_publisher.getText());
-            book.setPublishTime(tf_ts_delete_book_publish_time.getText());
-            book.setStock(Integer.parseInt(tf_ts_delete_book_stock.getText()));
-            book.setPrice(Double.parseDouble(tf_ts_delete_book_price.getText()));
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("确认删除？");
-            alert.setTitle("确认删除！");
-            alert.showAndWait();
-            ButtonType type = alert.getResult();
-            System.out.println("type="+type.getText());
-            if (type == ButtonType.OK) {
-                Boolean isok = DataBaseUtil.deleteBook(book);
-                if (isok) {
-                    System.out.println("delete ok");
-                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert1.setAlertType(Alert.AlertType.INFORMATION);
-                    alert1.setContentText("删除成功！");
-                    alert1.setTitle("删除成功！");
-                    alert1.show();
-                    ts_book_delete_clear();
-                } else {
-                    Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert2.setAlertType(Alert.AlertType.ERROR);
-                    alert2.setContentText("删除失败！");
-                    alert2.setTitle("删除失败！");
-                    alert2.show();
-                }
-            }
-
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("信息不完整！");
-            alert.setTitle("删除错误！");
-            alert.show();
-        }
-    }
-
-    /**
-     * 图书信息维护界面-----删除
-     * 清楚按钮点击事件
-     */
-    @FXML
-    private void ts_book_delete_clear() {
-        tf_ts_delete_book_id.setText("");
-        tf_ts_delete_book_name.setText("");
-        cb_ts_delete_book_type.getEditor().setText("");
-        tf_ts_delete_book_author.setText("");
-        tf_ts_delete_book_translator.setText("");
-        tf_ts_delete_book_publisher.setText("");
-        tf_ts_delete_book_publish_time.setText("");
-        tf_ts_delete_book_stock.setText("");
-        tf_ts_delete_book_price.setText("");
-    }
-
-    /**
-     * 添加新图书类别
-     */
-    public void addType() {
-        if (!tf_ts_book_typeAdder.getText().trim().equals("")) {
-            Set set = Constant.BOOK_TYPE.keySet();
-            Iterator iter = set.iterator();
-            while (iter.hasNext()) {
-                String key = (String) iter.next();
-                if (tf_ts_book_typeAdder.getText().trim().equals(key)) {
-                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert1.setAlertType(Alert.AlertType.INFORMATION);
-                    alert1.setContentText("重复类别！");
-                    alert1.setTitle("提示！");
-                    alert1.show();
-                    return;
-                }
-            }
-
-            boolean isok = DataBaseUtil.addNewBookType(tf_ts_book_typeAdder.getText().trim());
-            if (isok) {
-                System.out.println("add ok");
-                Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                alert1.setAlertType(Alert.AlertType.INFORMATION);
-                alert1.setContentText("添加成功！");
-                alert1.setTitle("添加成功！");
-                alert1.show();
-                tf_ts_book_typeAdder.setText("");
-                updateBookType();
-            } else {
-                Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-                alert2.setAlertType(Alert.AlertType.ERROR);
-                alert2.setContentText("添加失败！");
-                alert2.setTitle("添加失败！");
-                alert2.show();
-            }
-        }
-    }
-
-    /**
-     * *********************************************图书维护模块-------结束************************************************
-     */
-
-
-    /**
-     * *********************************************读者维护模块-------开始************************************************
-     */
-
-    /**
-     * 读者维护模块初始化
-     */
-    private void initReaderAddUi() {
-
-        for (int i = 0; i < Constant.READER_YTPES.length; i++) {
-            cb_rd_add_reader_type.getItems().addAll(Constant.READER_YTPES[i]);
-            cb_rd_alter_reader_type.getItems().addAll(Constant.READER_YTPES[i]);
-            cb_rd_delete_reader_type.getItems().addAll(Constant.READER_YTPES[i]);
-        }
-        cb_rd_add_reader_type.getSelectionModel().selectFirst();
-        cb_rd_alter_reader_type.getSelectionModel().selectFirst();
-        cb_rd_delete_reader_type.getSelectionModel().selectFirst();
-
-        for (int i = 0; i < Constant.SEX.length; i++) {
-            cb_rd_add_reader_sex.getItems().addAll(Constant.SEX[i]);
-            cb_rd_alter_reader_sex.getItems().addAll(Constant.SEX[i]);
-            cb_rd_delete_reader_sex.getItems().addAll(Constant.SEX[i]);
-        }
-        cb_rd_add_reader_sex.getSelectionModel().selectFirst();
-        cb_rd_alter_reader_sex.getSelectionModel().selectFirst();
-        cb_rd_delete_reader_sex.getSelectionModel().selectFirst();
-
-        RequiredFieldValidator validator_ts_book_add = new RequiredFieldValidator();
-        validator_ts_book_add.setMessage("请输入...");
-        tf_rd_alter_reader_search_id.getValidators().add(validator_ts_book_add);
-        tf_rd_alter_reader_search_id.focusedProperty().addListener((o,oldVal,newVal)->{
-            if(!newVal) tf_rd_alter_reader_search_id.validate();
-        });
-
-        tf_rd_delete_reader_search_id.getValidators().add(validator_ts_book_add);
-        tf_rd_delete_reader_search_id.focusedProperty().addListener((o,oldVal,newVal)->{
-            if(!newVal) tf_rd_delete_reader_search_id.validate();
-        });
-
-    }
-
-    /**
-     * 添加新的读者
-     */
-    @FXML
-    public void add_new_reader() {
-        if (!tf_rd_add_reader_id.getText().equals("") && !tf_rd_add_reader_name.getText().equals("") && !tf_rd_add_reader_numbers.getText().equals("") && !tf_rd_add_reader_days.getText().equals("") &&
-                !cb_rd_add_reader_type.getSelectionModel().getSelectedItem().toString().equals("") && !cb_rd_add_reader_sex.getSelectionModel().getSelectedItem().toString().equals("")) {
-            Reader reader = new Reader();
-            reader.setId(tf_rd_add_reader_id.getText());
-            reader.setName(tf_rd_add_reader_name.getText());
-            reader.setPassword("123456");//默认密码
-            reader.setType(cb_rd_add_reader_type.getSelectionModel().getSelectedItem().toString());
-            reader.setSex(cb_rd_add_reader_sex.getSelectionModel().getSelectedItem().toString());
-            reader.setMax_num(Integer.parseInt(tf_rd_add_reader_numbers.getText()));
-            reader.setDays_num(Integer.parseInt(tf_rd_add_reader_days.getText()));
-            reader.setForfeit(0);
-
-            Boolean isok = DataBaseUtil.addNewReader(reader);
-            if (isok) {
-                System.out.println("add ok");
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("添加成功！");
-                alert.setTitle("添加成功！");
-                alert.show();
-                rd_reader_add_clear();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("添加失败！");
-                alert.setTitle("添加失败！");
-                alert.show();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("信息不完整！");
-            alert.setTitle("添加错误！");
-            alert.show();
-        }
-    }
-
-    /**
-     * 读者信息维护界面-----添加
-     * 清楚按钮点击事件
-     */
-    @FXML
-    private void rd_reader_add_clear() {
-        tf_rd_add_reader_id.setText("");
-        tf_rd_add_reader_name.setText("");
-        tf_rd_add_reader_numbers.setText("");
-        tf_rd_add_reader_days.setText("");
-    }
-
-    /**
-     * 修改读者
-     */
-    @FXML
-    public void alter_rd_reader() {
-        if (!tf_rd_alter_reader_id.getText().equals("") && !tf_rd_alter_reader_name.getText().equals("") && !tf_rd_alter_reader_numbers.getText().equals("") && !tf_rd_alter_reader_days.getText().equals("") &&
-                !cb_rd_alter_reader_type.getSelectionModel().getSelectedItem().toString().equals("") && !cb_rd_alter_reader_sex.getSelectionModel().getSelectedItem().toString().equals("")) {
-            Reader reader = new Reader();
-            reader.setId(tf_rd_alter_reader_id.getText());
-            reader.setName(tf_rd_alter_reader_name.getText());
-            if (tgBtn_rd_alter_reader_password_reset.isPressed()) {
-                reader.setPassword("123456");//默认密码
-            } else {
-                reader.setPassword(rd_reader_alter_password);//原密码
-            }
-            reader.setType(cb_rd_alter_reader_type.getSelectionModel().getSelectedItem().toString());
-            reader.setSex(cb_rd_alter_reader_sex.getSelectionModel().getSelectedItem().toString());
-            reader.setMax_num(Integer.parseInt(tf_rd_alter_reader_numbers.getText()));
-            reader.setDays_num(Integer.parseInt(tf_rd_alter_reader_days.getText()));
-            reader.setForfeit(0);
-
-            Boolean isok = DataBaseUtil.alterReader(reader);
-            if (isok) {
-                System.out.println("add ok");
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("修改成功！");
-                alert.setTitle("修改成功！");
-                alert.show();
-                rd_reader_alter_clear();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("修改失败！");
-                alert.setTitle("修改失败！");
-                alert.show();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("信息不完整！");
-            alert.setTitle("修改错误！");
-            alert.show();
-        }
-    }
-
-    private String rd_reader_alter_password = "123456";
-
-    /**
-     * 读者维护---修改---查询读者
-     */
-    @FXML
-    public void rd_reader_alter_search() {
-        if (!tf_rd_alter_reader_search_id.getText().equals("")) {
-            Reader reader = DataBaseUtil.getReader(tf_rd_alter_reader_search_id.getText().trim());
-            if (reader != null) {
-                tf_rd_alter_reader_id.setText(reader.getId());
-                tf_rd_alter_reader_name.setText(reader.getName());
-                if (reader.getType().equals("教师")) {
-                    cb_rd_alter_reader_type.getSelectionModel().selectFirst();
-                } else if (reader.getType().equals("学生")) {
-                    cb_rd_alter_reader_type.getSelectionModel().select(1);
-                } else {
-                    cb_rd_alter_reader_type.getSelectionModel().select(2);
-                }
-                if (reader.getSex().equals("男")) {
-                    cb_rd_alter_reader_sex.getSelectionModel().selectFirst();
-                } else {
-                    cb_rd_alter_reader_sex.getSelectionModel().select(1);
-                }
-                rd_reader_alter_password = reader.getPassword();
-                tf_rd_alter_reader_numbers.setText(reader.getMax_num()+"");
-                tf_rd_alter_reader_days.setText(reader.getDays_num()+"");
-            } else {
-                tf_rd_alter_reader_search_id.setText("");
-                tf_rd_alter_reader_search_id.validate();
-            }
-        }
-
-    }
-
-    /**
-     * 读者信息维护界面-----修改
-     * 清楚按钮点击事件
-     */
-    @FXML
-    private void rd_reader_alter_clear() {
-        tf_rd_alter_reader_id.setText("");
-        tf_rd_alter_reader_name.setText("");
-        tf_rd_alter_reader_numbers.setText("");
-        tf_rd_alter_reader_days.setText("");
-    }
-
-
-    /**
-     * 读者维护---删除---读者查询
-     */
-    @FXML
-    public void rd_reader_delete_search() {
-        if (!tf_rd_delete_reader_search_id.getText().equals("")) {
-            Reader reader = DataBaseUtil.getReader(tf_rd_delete_reader_search_id.getText().trim());
-            if (reader != null) {
-                tf_rd_delete_reader_id.setText(reader.getId());
-                tf_rd_delete_reader_name.setText(reader.getName());
-                if (reader.getType().equals("教师")) {
-                    cb_rd_delete_reader_type.getSelectionModel().selectFirst();
-                } else if (reader.getType().equals("学生")) {
-                    cb_rd_delete_reader_type.getSelectionModel().select(1);
-                } else {
-                    cb_rd_delete_reader_type.getSelectionModel().select(2);
-                }
-                if (reader.getSex().equals("男")) {
-                    cb_rd_delete_reader_sex.getSelectionModel().selectFirst();
-                } else {
-                    cb_rd_delete_reader_sex.getSelectionModel().select(1);
-                }
-                tf_rd_delete_reader_numbers.setText(reader.getMax_num()+"");
-                tf_rd_delete_reader_days.setText(reader.getDays_num()+"");
-            } else {
-                tf_rd_delete_reader_search_id.setText("");
-                tf_rd_delete_reader_search_id.validate();
-            }
-        }
-
-    }
-
-    /**
-     * 删除读者
-     */
-    @FXML
-    public void delete_rd_reader() {
-        if (!tf_rd_delete_reader_id.getText().equals("")) {
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("确认删除？");
-            alert.setTitle("确认删除！");
-            alert.showAndWait();
-            ButtonType type = alert.getResult();
-            System.out.println("type="+type.getText());
-            if (type == ButtonType.OK) {
-                Boolean isok = DataBaseUtil.deleteReader(tf_rd_delete_reader_id.getText());
-                if (isok) {
-                    System.out.println("add ok");
-                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert1.setAlertType(Alert.AlertType.INFORMATION);
-                    alert1.setContentText("删除成功！");
-                    alert1.setTitle("删除成功！");
-                    alert1.show();
-                    rd_reader_delete_clear();
-                } else {
-                    Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert2.setAlertType(Alert.AlertType.ERROR);
-                    alert2.setContentText("删除失败！");
-                    alert2.setTitle("删除失败！");
-                    alert2.show();
-                }
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("信息不完整！");
-            alert.setTitle("删除错误！");
-            alert.show();
-        }
-    }
-
-    /**
-     * 读者信息维护界面-----删除
-     * 清楚按钮点击事件
-     */
-    @FXML
-    private void rd_reader_delete_clear() {
-        tf_rd_delete_reader_id.setText("");
-        tf_rd_delete_reader_name.setText("");
-        tf_rd_delete_reader_numbers.setText("");
-        tf_rd_delete_reader_days.setText("");
-    }
-
-
-    /**
-     * *********************************************读者维护模块-------结束************************************************
-     */
-
-
-    /**
-     * *********************************************所有图书、读者、借阅显示模块-------开始************************************************
-     */
-
-    /**
-     * 获取全部书目,并显示
-     */
-    @FXML
-    public void getAllBooks() {
-        ObservableList<Book> books = DataBaseUtil.getAllBooks();
-        if (books != null) {
-            tbv_book.setItems(books);
-        } else {
-//            tbv_book.setAccessibleText("无记录");
-        }
-
-    }
-
-    /**
-     * 获取全部书目,并显示
-     */
-    @FXML
-    public void getAllReaders() {
-        ObservableList<Reader> readers = DataBaseUtil.getAllReaders();
-        if (readers != null) {
-            tbv_reader.setItems(readers);
-        }else {
-//            tbv_reader.setAccessibleText("无记录");
-        }
-    }
-
-    /**
-     * 获取全部借阅记录
-     */
-    public void getAllBorrowedRecordings() {
-        ObservableList<CheckOutRecord> borrows = DataBaseUtil.getAllBorrowRecord();
-        if (borrows != null) {
-            tbv_borrow.setItems(borrows);
-        }else {
-//            tbv_borrow.setAccessibleText("无记录");
-        }
-    }
+//    /**
+//     * 图书信息维护界面-----添加
+//     * 添加按钮点击事件
+//     */
+//    @FXML
+//    public void ts_book_add() {
+//        System.out.println("info====>  "+tf_ts_add_book_id.getText() + tf_ts_add_book_name.getText()+tf_ts_add_book_author.getText()+tf_ts_add_book_translator.getText()+tf_ts_add_book_publisher.getText()+
+//                tf_ts_add_book_price.getText()+tf_ts_add_book_stock.getText()+cb_ts_add_book_type.getSelectionModel().getSelectedItem().toString()+dp_ts_add_book_publish_time.getEditor().getText());
+//        if (!tf_ts_add_book_id.getText().equals("") && !tf_ts_add_book_name.getText().equals("") && !tf_ts_add_book_author.getText().equals("") && !tf_ts_add_book_translator.getText().equals("") && !tf_ts_add_book_publisher.getText().equals("") &&
+//                !tf_ts_add_book_price.getText().equals("") && !tf_ts_add_book_stock.getText().equals("") && !cb_ts_add_book_type.getSelectionModel().getSelectedItem().toString().equals("") && !dp_ts_add_book_publish_time.getEditor().getText().equals("")) {
+//            Book book = new Book();
+//            book.setId(tf_ts_add_book_id.getText());
+//            book.setName(tf_ts_add_book_name.getText());
+//            book.setType(Constant.BOOK_TYPE.get(cb_ts_add_book_type.getSelectionModel().getSelectedItem().toString()));
+//            book.setAuthor(tf_ts_add_book_author.getText());
+//            book.setTranslator(tf_ts_add_book_translator.getText());
+//            book.setPublisher(tf_ts_add_book_publisher.getText());
+//            book.setPublishTime(dp_ts_add_book_publish_time.getEditor().getText());
+//            book.setStock(Integer.parseInt(tf_ts_add_book_stock.getText()));
+//            book.setPrice(Double.parseDouble(tf_ts_add_book_price.getText()));
+//            Boolean isok = DataBaseUtil.addNewBook(book);
+//            if (isok) {
+//                System.out.println("add ok");
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.INFORMATION);
+//                alert.setContentText("添加成功！");
+//                alert.setTitle("添加成功！");
+//                alert.show();
+//                ts_book_add_clear();
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.ERROR);
+//                alert.setContentText("添加失败！");
+//                alert.setTitle("添加失败！");
+//                alert.show();
+//            }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.ERROR);
+//            alert.setContentText("信息不完整！");
+//            alert.setTitle("添加错误！");
+//            alert.show();
+//        }
+//    }
+//
+//    /**
+//     * 图书信息维护界面-----添加
+//     * 清楚按钮点击事件
+//     */
+//    @FXML
+//    private void ts_book_add_clear() {
+//        tf_ts_add_book_id.setText("");
+//        tf_ts_add_book_name.setText("");
+////        cb_ts_add_book_type.getSelectionModel().clearSelection();
+//        tf_ts_add_book_author.setText("");
+//        tf_ts_add_book_translator.setText("");
+//        tf_ts_add_book_publisher.setText("");
+//        dp_ts_add_book_publish_time.getEditor().setText("");
+//        tf_ts_add_book_stock.setText("");
+//        tf_ts_add_book_price.setText("");
+//    }
+//
+//    /**
+//     * 图书维护---修改---查询图书
+//     */
+//    @FXML
+//    public void ts_book_alter_search() {
+//        if (!tf_ts_alter_book_search_id.getText().equals("")) {
+//            Book book = DataBaseUtil.getBook(tf_ts_alter_book_search_id.getText().trim());
+//            if (book != null) {
+//                tf_ts_alter_book_id.setText(book.getId());
+//                tf_ts_alter_book_name.setText(book.getName());
+//                cb_ts_alter_book_type.getSelectionModel().select(getBookTypeSelectNumber(book.getType()));
+//                tf_ts_alter_book_author.setText(book.getAuthor());
+//                tf_ts_alter_book_translator.setText(book.getTranslator());
+//                tf_ts_alter_book_publisher.setText(book.getPublisher());
+//                tp_ts_alter_book_publish_time.getEditor().setText(book.getPublishTime());
+//                tf_ts_alter_book_price.setText("" + book.getPrice());
+//                tf_ts_alter_book_stock.setText("" + book.getStock());
+//            } else {
+//                tf_ts_alter_book_search_id.setText("");
+//                tf_ts_alter_book_search_id.validate();
+//            }
+//        }
+//    }
+//
+//    /**
+//     * 图书维护---修改
+//     */
+//    @FXML
+//    public void ts_book_alter_start() {
+//        if (!tf_ts_alter_book_id.getText().equals("") && !tf_ts_alter_book_name.getText().equals("") && !tf_ts_alter_book_author.getText().equals("") && !tf_ts_alter_book_translator.getText().equals("") && !tf_ts_alter_book_publisher.getText().equals("") &&
+//                !tf_ts_alter_book_price.getText().equals("") && !tf_ts_alter_book_stock.getText().equals("") && !cb_ts_alter_book_type.getSelectionModel().getSelectedItem().toString().equals("") && !tp_ts_alter_book_publish_time.getEditor().getText().equals("")) {
+//            Book book = new Book();
+//            book.setId(tf_ts_alter_book_id.getText());
+//            book.setName(tf_ts_alter_book_name.getText());
+//            book.setType(getBookIdAccordingToSelectNumber(cb_ts_alter_book_type.getSelectionModel().getSelectedIndex()));
+//            book.setAuthor(tf_ts_alter_book_author.getText());
+//            book.setTranslator(tf_ts_alter_book_translator.getText());
+//            book.setPublisher(tf_ts_alter_book_publisher.getText());
+//            book.setPublishTime(tp_ts_alter_book_publish_time.getEditor().getText());
+//            book.setStock(Integer.parseInt(tf_ts_alter_book_stock.getText()));
+//            book.setPrice(Double.parseDouble(tf_ts_alter_book_price.getText()));
+//            Boolean isok = DataBaseUtil.alterBook(book);
+//            if (isok) {
+//                System.out.println("alter ok");
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.INFORMATION);
+//                alert.setContentText("修改成功！");
+//                alert.setTitle("修改成功！");
+//                alert.show();
+//                ts_book_alter_clear();
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.ERROR);
+//                alert.setContentText("修改失败！");
+//                alert.setTitle("修改失败！");
+//                alert.show();
+//            }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.ERROR);
+//            alert.setContentText("信息不完整！");
+//            alert.setTitle("修改错误！");
+//            alert.show();
+//        }
+//    }
+//
+//    /**
+//     * 图书信息维护界面-----修改
+//     * 清楚按钮点击事件
+//     */
+//    @FXML
+//    private void ts_book_alter_clear() {
+//        tf_ts_alter_book_id.setText("");
+//        tf_ts_alter_book_name.setText("");
+////        cb_ts_alter_book_type.getSelectionModel().clearSelection();
+//        tf_ts_alter_book_author.setText("");
+//        tf_ts_alter_book_translator.setText("");
+//        tf_ts_alter_book_publisher.setText("");
+//        tp_ts_alter_book_publish_time.getEditor().setText("");
+//        tf_ts_alter_book_stock.setText("");
+//        tf_ts_alter_book_price.setText("");
+//    }
+//
+//
+//    /**
+//     * 图书维护---删除---查询图书
+//     */
+//    @FXML
+//    public void ts_book_delete_search() {
+//        if (!tf_ts_delete_book_search_id.getText().equals("")) {
+//            Book book = DataBaseUtil.getBook(tf_ts_delete_book_search_id.getText().trim());
+//            if (book != null) {
+//                tf_ts_delete_book_id.setText(book.getId());
+//                tf_ts_delete_book_name.setText(book.getName());
+//                cb_ts_delete_book_type.getSelectionModel().select(getBookTypeSelectNumber(book.getType()));
+//                tf_ts_delete_book_author.setText(book.getAuthor());
+//                tf_ts_delete_book_translator.setText(book.getTranslator());
+//                tf_ts_delete_book_publisher.setText(book.getPublisher());
+//                tf_ts_delete_book_publish_time.setText(book.getPublishTime());
+//                tf_ts_delete_book_price.setText("" + book.getPrice());
+//                tf_ts_delete_book_stock.setText("" + book.getStock());
+//            } else {
+//                tf_ts_delete_book_search_id.setText("");
+//                tf_ts_delete_book_search_id.validate();
+//            }
+//        }
+//
+//    }
+//
+//    /**
+//     * 图书维护---删除--按钮
+//     */
+//    @FXML
+//    public void ts_book_delete() {
+//        if (!tf_ts_delete_book_id.getText().equals("")) {
+//            Book book = new Book();
+//            book.setId(tf_ts_delete_book_id.getText());
+//            book.setName(tf_ts_delete_book_name.getText());
+//            book.setType(getBookIdAccordingToSelectNumber(cb_ts_delete_book_type.getSelectionModel().getSelectedIndex()));
+//            book.setAuthor(tf_ts_delete_book_author.getText());
+//            book.setTranslator(tf_ts_delete_book_translator.getText());
+//            book.setPublisher(tf_ts_delete_book_publisher.getText());
+//            book.setPublishTime(tf_ts_delete_book_publish_time.getText());
+//            book.setStock(Integer.parseInt(tf_ts_delete_book_stock.getText()));
+//            book.setPrice(Double.parseDouble(tf_ts_delete_book_price.getText()));
+//
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+//            alert.setContentText("确认删除？");
+//            alert.setTitle("确认删除！");
+//            alert.showAndWait();
+//            ButtonType type = alert.getResult();
+//            System.out.println("type="+type.getText());
+//            if (type == ButtonType.OK) {
+//                Boolean isok = DataBaseUtil.deleteBook(book);
+//                if (isok) {
+//                    System.out.println("delete ok");
+//                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert1.setAlertType(Alert.AlertType.INFORMATION);
+//                    alert1.setContentText("删除成功！");
+//                    alert1.setTitle("删除成功！");
+//                    alert1.show();
+//                    ts_book_delete_clear();
+//                } else {
+//                    Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert2.setAlertType(Alert.AlertType.ERROR);
+//                    alert2.setContentText("删除失败！");
+//                    alert2.setTitle("删除失败！");
+//                    alert2.show();
+//                }
+//            }
+//
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.ERROR);
+//            alert.setContentText("信息不完整！");
+//            alert.setTitle("删除错误！");
+//            alert.show();
+//        }
+//    }
+//
+//    /**
+//     * 图书信息维护界面-----删除
+//     * 清楚按钮点击事件
+//     */
+//    @FXML
+//    private void ts_book_delete_clear() {
+//        tf_ts_delete_book_id.setText("");
+//        tf_ts_delete_book_name.setText("");
+//        cb_ts_delete_book_type.getEditor().setText("");
+//        tf_ts_delete_book_author.setText("");
+//        tf_ts_delete_book_translator.setText("");
+//        tf_ts_delete_book_publisher.setText("");
+//        tf_ts_delete_book_publish_time.setText("");
+//        tf_ts_delete_book_stock.setText("");
+//        tf_ts_delete_book_price.setText("");
+//    }
+//
+//    /**
+//     * 添加新图书类别
+//     */
+//    public void addType() {
+//        if (!tf_ts_book_typeAdder.getText().trim().equals("")) {
+//            Set set = Constant.BOOK_TYPE.keySet();
+//            Iterator iter = set.iterator();
+//            while (iter.hasNext()) {
+//                String key = (String) iter.next();
+//                if (tf_ts_book_typeAdder.getText().trim().equals(key)) {
+//                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert1.setAlertType(Alert.AlertType.INFORMATION);
+//                    alert1.setContentText("重复类别！");
+//                    alert1.setTitle("提示！");
+//                    alert1.show();
+//                    return;
+//                }
+//            }
+//
+//            boolean isok = DataBaseUtil.addNewBookType(tf_ts_book_typeAdder.getText().trim());
+//            if (isok) {
+//                System.out.println("add ok");
+//                Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert1.setAlertType(Alert.AlertType.INFORMATION);
+//                alert1.setContentText("添加成功！");
+//                alert1.setTitle("添加成功！");
+//                alert1.show();
+//                tf_ts_book_typeAdder.setText("");
+//                updateBookType();
+//            } else {
+//                Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert2.setAlertType(Alert.AlertType.ERROR);
+//                alert2.setContentText("添加失败！");
+//                alert2.setTitle("添加失败！");
+//                alert2.show();
+//            }
+//        }
+//    }
+//
+//    /**
+//     * *********************************************图书维护模块-------结束************************************************
+//     */
+//
+//
+//    /**
+//     * *********************************************读者维护模块-------开始************************************************
+//     */
+//
+//    /**
+//     * 读者维护模块初始化
+//     */
+//    private void initReaderAddUi() {
+//
+//        for (int i = 0; i < Constant.READER_YTPES.length; i++) {
+//            cb_rd_add_reader_type.getItems().addAll(Constant.READER_YTPES[i]);
+//            cb_rd_alter_reader_type.getItems().addAll(Constant.READER_YTPES[i]);
+//            cb_rd_delete_reader_type.getItems().addAll(Constant.READER_YTPES[i]);
+//        }
+//        cb_rd_add_reader_type.getSelectionModel().selectFirst();
+//        cb_rd_alter_reader_type.getSelectionModel().selectFirst();
+//        cb_rd_delete_reader_type.getSelectionModel().selectFirst();
+//
+//        for (int i = 0; i < Constant.SEX.length; i++) {
+//            cb_rd_add_reader_sex.getItems().addAll(Constant.SEX[i]);
+//            cb_rd_alter_reader_sex.getItems().addAll(Constant.SEX[i]);
+//            cb_rd_delete_reader_sex.getItems().addAll(Constant.SEX[i]);
+//        }
+//        cb_rd_add_reader_sex.getSelectionModel().selectFirst();
+//        cb_rd_alter_reader_sex.getSelectionModel().selectFirst();
+//        cb_rd_delete_reader_sex.getSelectionModel().selectFirst();
+//
+//        RequiredFieldValidator validator_ts_book_add = new RequiredFieldValidator();
+//        validator_ts_book_add.setMessage("请输入...");
+//        tf_rd_alter_reader_search_id.getValidators().add(validator_ts_book_add);
+//        tf_rd_alter_reader_search_id.focusedProperty().addListener((o,oldVal,newVal)->{
+//            if(!newVal) tf_rd_alter_reader_search_id.validate();
+//        });
+//
+//        tf_rd_delete_reader_search_id.getValidators().add(validator_ts_book_add);
+//        tf_rd_delete_reader_search_id.focusedProperty().addListener((o,oldVal,newVal)->{
+//            if(!newVal) tf_rd_delete_reader_search_id.validate();
+//        });
+//
+//    }
+//
+//    /**
+//     * 添加新的读者
+//     */
+//    @FXML
+//    public void add_new_reader() {
+//        if (!tf_rd_add_reader_id.getText().equals("") && !tf_rd_add_reader_name.getText().equals("") && !tf_rd_add_reader_numbers.getText().equals("") && !tf_rd_add_reader_days.getText().equals("") &&
+//                !cb_rd_add_reader_type.getSelectionModel().getSelectedItem().toString().equals("") && !cb_rd_add_reader_sex.getSelectionModel().getSelectedItem().toString().equals("")) {
+//            Reader reader = new Reader();
+//            reader.setId(tf_rd_add_reader_id.getText());
+//            reader.setName(tf_rd_add_reader_name.getText());
+//            reader.setPassword("123456");//默认密码
+//            reader.setType(cb_rd_add_reader_type.getSelectionModel().getSelectedItem().toString());
+//            reader.setSex(cb_rd_add_reader_sex.getSelectionModel().getSelectedItem().toString());
+//            reader.setMax_num(Integer.parseInt(tf_rd_add_reader_numbers.getText()));
+//            reader.setDays_num(Integer.parseInt(tf_rd_add_reader_days.getText()));
+//            reader.setForfeit(0);
+//
+//            Boolean isok = DataBaseUtil.addNewReader(reader);
+//            if (isok) {
+//                System.out.println("add ok");
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.INFORMATION);
+//                alert.setContentText("添加成功！");
+//                alert.setTitle("添加成功！");
+//                alert.show();
+//                rd_reader_add_clear();
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.ERROR);
+//                alert.setContentText("添加失败！");
+//                alert.setTitle("添加失败！");
+//                alert.show();
+//            }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.ERROR);
+//            alert.setContentText("信息不完整！");
+//            alert.setTitle("添加错误！");
+//            alert.show();
+//        }
+//    }
+//
+//    /**
+//     * 读者信息维护界面-----添加
+//     * 清楚按钮点击事件
+//     */
+//    @FXML
+//    private void rd_reader_add_clear() {
+//        tf_rd_add_reader_id.setText("");
+//        tf_rd_add_reader_name.setText("");
+//        tf_rd_add_reader_numbers.setText("");
+//        tf_rd_add_reader_days.setText("");
+//    }
+//
+//    /**
+//     * 修改读者
+//     */
+//    @FXML
+//    public void alter_rd_reader() {
+//        if (!tf_rd_alter_reader_id.getText().equals("") && !tf_rd_alter_reader_name.getText().equals("") && !tf_rd_alter_reader_numbers.getText().equals("") && !tf_rd_alter_reader_days.getText().equals("") &&
+//                !cb_rd_alter_reader_type.getSelectionModel().getSelectedItem().toString().equals("") && !cb_rd_alter_reader_sex.getSelectionModel().getSelectedItem().toString().equals("")) {
+//            Reader reader = new Reader();
+//            reader.setId(tf_rd_alter_reader_id.getText());
+//            reader.setName(tf_rd_alter_reader_name.getText());
+//            if (tgBtn_rd_alter_reader_password_reset.isPressed()) {
+//                reader.setPassword("123456");//默认密码
+//            } else {
+//                reader.setPassword(rd_reader_alter_password);//原密码
+//            }
+//            reader.setType(cb_rd_alter_reader_type.getSelectionModel().getSelectedItem().toString());
+//            reader.setSex(cb_rd_alter_reader_sex.getSelectionModel().getSelectedItem().toString());
+//            reader.setMax_num(Integer.parseInt(tf_rd_alter_reader_numbers.getText()));
+//            reader.setDays_num(Integer.parseInt(tf_rd_alter_reader_days.getText()));
+//            reader.setForfeit(0);
+//
+//            Boolean isok = DataBaseUtil.alterReader(reader);
+//            if (isok) {
+//                System.out.println("add ok");
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.INFORMATION);
+//                alert.setContentText("修改成功！");
+//                alert.setTitle("修改成功！");
+//                alert.show();
+//                rd_reader_alter_clear();
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setAlertType(Alert.AlertType.ERROR);
+//                alert.setContentText("修改失败！");
+//                alert.setTitle("修改失败！");
+//                alert.show();
+//            }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.ERROR);
+//            alert.setContentText("信息不完整！");
+//            alert.setTitle("修改错误！");
+//            alert.show();
+//        }
+//    }
+//
+//    private String rd_reader_alter_password = "123456";
+//
+//    /**
+//     * 读者维护---修改---查询读者
+//     */
+//    @FXML
+//    public void rd_reader_alter_search() {
+//        if (!tf_rd_alter_reader_search_id.getText().equals("")) {
+//            Reader reader = DataBaseUtil.getReader(tf_rd_alter_reader_search_id.getText().trim());
+//            if (reader != null) {
+//                tf_rd_alter_reader_id.setText(reader.getId());
+//                tf_rd_alter_reader_name.setText(reader.getName());
+//                if (reader.getType().equals("教师")) {
+//                    cb_rd_alter_reader_type.getSelectionModel().selectFirst();
+//                } else if (reader.getType().equals("学生")) {
+//                    cb_rd_alter_reader_type.getSelectionModel().select(1);
+//                } else {
+//                    cb_rd_alter_reader_type.getSelectionModel().select(2);
+//                }
+//                if (reader.getSex().equals("男")) {
+//                    cb_rd_alter_reader_sex.getSelectionModel().selectFirst();
+//                } else {
+//                    cb_rd_alter_reader_sex.getSelectionModel().select(1);
+//                }
+//                rd_reader_alter_password = reader.getPassword();
+//                tf_rd_alter_reader_numbers.setText(reader.getMax_num()+"");
+//                tf_rd_alter_reader_days.setText(reader.getDays_num()+"");
+//            } else {
+//                tf_rd_alter_reader_search_id.setText("");
+//                tf_rd_alter_reader_search_id.validate();
+//            }
+//        }
+//
+//    }
+//
+//    /**
+//     * 读者信息维护界面-----修改
+//     * 清楚按钮点击事件
+//     */
+//    @FXML
+//    private void rd_reader_alter_clear() {
+//        tf_rd_alter_reader_id.setText("");
+//        tf_rd_alter_reader_name.setText("");
+//        tf_rd_alter_reader_numbers.setText("");
+//        tf_rd_alter_reader_days.setText("");
+//    }
+//
+//
+//    /**
+//     * 读者维护---删除---读者查询
+//     */
+//    @FXML
+//    public void rd_reader_delete_search() {
+//        if (!tf_rd_delete_reader_search_id.getText().equals("")) {
+//            Reader reader = DataBaseUtil.getReader(tf_rd_delete_reader_search_id.getText().trim());
+//            if (reader != null) {
+//                tf_rd_delete_reader_id.setText(reader.getId());
+//                tf_rd_delete_reader_name.setText(reader.getName());
+//                if (reader.getType().equals("教师")) {
+//                    cb_rd_delete_reader_type.getSelectionModel().selectFirst();
+//                } else if (reader.getType().equals("学生")) {
+//                    cb_rd_delete_reader_type.getSelectionModel().select(1);
+//                } else {
+//                    cb_rd_delete_reader_type.getSelectionModel().select(2);
+//                }
+//                if (reader.getSex().equals("男")) {
+//                    cb_rd_delete_reader_sex.getSelectionModel().selectFirst();
+//                } else {
+//                    cb_rd_delete_reader_sex.getSelectionModel().select(1);
+//                }
+//                tf_rd_delete_reader_numbers.setText(reader.getMax_num()+"");
+//                tf_rd_delete_reader_days.setText(reader.getDays_num()+"");
+//            } else {
+//                tf_rd_delete_reader_search_id.setText("");
+//                tf_rd_delete_reader_search_id.validate();
+//            }
+//        }
+//
+//    }
+//
+//    /**
+//     * 删除读者
+//     */
+//    @FXML
+//    public void delete_rd_reader() {
+//        if (!tf_rd_delete_reader_id.getText().equals("")) {
+//
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+//            alert.setContentText("确认删除？");
+//            alert.setTitle("确认删除！");
+//            alert.showAndWait();
+//            ButtonType type = alert.getResult();
+//            System.out.println("type="+type.getText());
+//            if (type == ButtonType.OK) {
+//                Boolean isok = DataBaseUtil.deleteReader(tf_rd_delete_reader_id.getText());
+//                if (isok) {
+//                    System.out.println("add ok");
+//                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert1.setAlertType(Alert.AlertType.INFORMATION);
+//                    alert1.setContentText("删除成功！");
+//                    alert1.setTitle("删除成功！");
+//                    alert1.show();
+//                    rd_reader_delete_clear();
+//                } else {
+//                    Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert2.setAlertType(Alert.AlertType.ERROR);
+//                    alert2.setContentText("删除失败！");
+//                    alert2.setTitle("删除失败！");
+//                    alert2.show();
+//                }
+//            }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setAlertType(Alert.AlertType.ERROR);
+//            alert.setContentText("信息不完整！");
+//            alert.setTitle("删除错误！");
+//            alert.show();
+//        }
+//    }
+//
+//    /**
+//     * 读者信息维护界面-----删除
+//     * 清楚按钮点击事件
+//     */
+//    @FXML
+//    private void rd_reader_delete_clear() {
+//        tf_rd_delete_reader_id.setText("");
+//        tf_rd_delete_reader_name.setText("");
+//        tf_rd_delete_reader_numbers.setText("");
+//        tf_rd_delete_reader_days.setText("");
+//    }
+//
+//
+//    /**
+//     * *********************************************读者维护模块-------结束************************************************
+//     */
+//
+//
+//    /**
+//     * *********************************************所有图书、读者、借阅显示模块-------开始************************************************
+//     */
+//
+//    /**
+//     * 获取全部书目,并显示
+//     */
+//    @FXML
+//    public void getAllBooks() {
+//        ObservableList<Book> books = DataBaseUtil.getAllBooks();
+//        if (books != null) {
+//            tbv_book.setItems(books);
+//        } else {
+////            tbv_book.setAccessibleText("无记录");
+//        }
+//
+//    }
+//
+//    /**
+//     * 获取全部书目,并显示
+//     */
+//    @FXML
+//    public void getAllReaders() {
+//        ObservableList<Reader> readers = DataBaseUtil.getAllReaders();
+//        if (readers != null) {
+//            tbv_reader.setItems(readers);
+//        }else {
+////            tbv_reader.setAccessibleText("无记录");
+//        }
+//    }
+//
+//    /**
+//     * 获取全部借阅记录
+//     */
+//    public void getAllBorrowedRecordings() {
+//        ObservableList<CheckOutRecord> borrows = DataBaseUtil.getAllBorrowRecord();
+//        if (borrows != null) {
+//            tbv_borrow.setItems(borrows);
+//        }else {
+////            tbv_borrow.setAccessibleText("无记录");
+//        }
+//    }
 
 }

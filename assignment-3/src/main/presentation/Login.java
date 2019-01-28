@@ -1,9 +1,14 @@
 package main.presentation;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.presentation.controller.LoginController;
 import main.presentation.controller.MainController;
@@ -62,6 +67,29 @@ public class Login extends Application {
             controller.setApp(this);
             controller.setUserInfo(username);
             Scene scene = new Scene(root, 700, 460);
+            scene.getStylesheets().add(Login.class.getResource("css/main.css").toExternalForm());
+            mainStage.setScene(scene);
+            mainStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void gotoOnlineReaderUi(String content, String username) {
+        try {
+            mainStage.setTitle("在线阅读器");
+            JFXButton button = new JFXButton("返回");
+            button.setMinWidth(50);
+            button.setOnAction(action -> {
+                this.gotoReaderUi(username);
+            });
+
+            JFXTextArea contentArea = new JFXTextArea();
+            contentArea.setText(content);
+            contentArea.setWrapText(true);
+            contentArea.setEditable(false);
+            VBox vBox = new VBox(contentArea, button);
+            Scene scene = new Scene(vBox, 700, 460);
             scene.getStylesheets().add(Login.class.getResource("css/main.css").toExternalForm());
             mainStage.setScene(scene);
             mainStage.show();

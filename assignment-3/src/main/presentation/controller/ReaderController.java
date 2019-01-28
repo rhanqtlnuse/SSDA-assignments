@@ -9,10 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import main.business.impl.BookBusinessServiceImpl;
 import main.business.impl.ReaderBusinessServiceImpl;
@@ -25,6 +27,8 @@ import main.common.book.CheckOutRecord;
 import main.common.resultmessage.CheckOutResultMessage;
 import main.common.user.*;
 import main.presentation.Login;
+import main.presentation.entity.BookItem;
+import main.presentation.entity.CheckOutRecordItem;
 
 import java.net.URL;
 import java.text.ParseException;
@@ -55,16 +59,14 @@ public class ReaderController implements Initializable {
     private TableColumn tb_column_book_outCount;
     @FXML
     private TableColumn tb_column_book_remainingCount;
+    @FXML
+    private TableColumn tb_column_book_onlineReading;
 
     //用户信息
     @FXML
     private JFXTextField tf_userInfo_readerId;
     @FXML
-    private JFXTextField tf_userInfo_readerName;
-    @FXML
     private JFXTextField tf_userInfo_readerType;
-    @FXML
-    private JFXTextField tf_userInfo_readerSex;
     @FXML
     private JFXTextField tf_userInfo_readerMaxNumbers;
     @FXML
@@ -121,6 +123,8 @@ public class ReaderController implements Initializable {
         tb_column_book_level.setCellValueFactory(new PropertyValueFactory("level"));
         tb_column_book_outCount.setCellValueFactory(new PropertyValueFactory("outCount"));
         tb_column_book_remainingCount.setCellValueFactory(new PropertyValueFactory("remainingCount"));
+        tb_column_book_onlineReading.setCellValueFactory((Callback<TableColumn.CellDataFeatures<BookItem, Boolean>, ObservableValue<Boolean>>) p -> new SimpleBooleanProperty(p.getValue() != null));
+        tb_column_book_onlineReading.setCellFactory((Callback<TableColumn<BookItem, Boolean>, TableCell<BookItem, Boolean>>) p -> new ButtonCell_1());
 
         RequiredFieldValidator validator = new RequiredFieldValidator();
         validator.setMessage("请输入...");
@@ -131,18 +135,40 @@ public class ReaderController implements Initializable {
         });
     }
 
+    private class ButtonCell_1 extends TableCell<BookItem, Boolean> {
+        final Button cellButton1 = new Button("阅读");
+        ButtonCell_1(){
+            cellButton1.setOnAction(t -> {
+                // do something when button clicked
+                tbv_search_Result.getSelectionModel().select(getTableRow().getIndex());
+                ObservableList<BookItem> userbb = tbv_search_Result.getItems();
+                String bookId = userbb.get(getTableRow().getIndex()).getIsbn();
+                String content = readerBusinessService.show(bookId);
+                myApp.gotoOnlineReaderUi(content, username);
+            });
+        }
+
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if(!empty){
+                setGraphic(cellButton1);
+            }
+        }
+    }
+
     //Define the button cell
-    private class ButtonCell extends TableCell<CheckOutRecord, Boolean> {
+    private class ButtonCell extends TableCell<CheckOutRecordItem, Boolean> {
         final Button cellButton = new Button("续借");
 
         ButtonCell(){
             cellButton.setOnAction(t -> {
                 // do something when button clicked
                 tbv_userInfo_borrowRecord.getSelectionModel().select(getTableRow().getIndex());
-                ObservableList<CheckOutRecord> userbb = tbv_userInfo_borrowRecord.getItems();
-                String bookId = userbb.get(getTableRow().getIndex()).getBook().getIsbn();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String backDate = sdf.format(userbb.get(getTableRow().getIndex()).getToDate());
+                ObservableList<CheckOutRecordItem> userbb = tbv_userInfo_borrowRecord.getItems();
+                String bookId = userbb.get(getTableRow().getIndex()).getBookIsbn();
+                String backDate = userbb.get(getTableRow().getIndex()).getToDate();
                 reBorrow(bookId, backDate);
             });
         }
@@ -225,9 +251,15 @@ public class ReaderController implements Initializable {
      */
     private void tf_reader_search_keyEvent(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            ObservableList<Book> books = FXCollections.observableArrayList();
-            books.addAll(bookBusinessService.findByTitle(tf_reader_search.getText()));
-            books.addAll(bookBusinessService.findByAuthor(tf_reader_search.getText()));
+            ObservableList<BookItem> books = FXCollections.observableArrayList();
+            for(Book b : bookBusinessService.findByTitle(tf_reader_search.getText())) {
+                BookItem bit = new BookItem(b);
+                books.add(bit);
+            }
+            for(Book b : bookBusinessService.findByAuthor(tf_reader_search.getText())) {
+                BookItem bit = new BookItem(b);
+                books.add(bit);
+            }
             tbv_search_Result.setItems(books);
             lb_search_resultNumber.setText(tbv_search_Result.getItems().size()+" 条记录");
         }
@@ -238,9 +270,13 @@ public class ReaderController implements Initializable {
      */
     @FXML
     private void tf_reader_search() {
-        ObservableList<Book> books = FXCollections.observableArrayList();
-        books.addAll(bookBusinessService.findByTitle(tf_reader_search.getText()));
-        books.addAll(bookBusinessService.findByAuthor(tf_reader_search.getText()));
+        ObservableList<BookItem> books = FXCollections.observableArrayList();
+        for(Book b : bookBusinessService.findByTitle(tf_reader_search.getText())) {
+            books.add(new BookItem(b));
+        }
+        for(Book b : bookBusinessService.findByAuthor(tf_reader_search.getText())) {
+            books.add(new BookItem(b));
+        }
         tbv_search_Result.setItems(books);
         lb_search_resultNumber.setText(tbv_search_Result.getItems().size()+" 条记录");
     }
@@ -310,9 +346,7 @@ public class ReaderController implements Initializable {
             default: assert false : "Unknown User Type" + userType;
         }
         tf_userInfo_readerId.setText(user.getUsername());
-        tf_userInfo_readerName.setText("");
         tf_userInfo_readerType.setText(type.toString());
-        tf_userInfo_readerSex.setText("");
         tf_userInfo_readerMaxNumbers.setText(String.valueOf(user.getCountLimitation()));
         tf_userInfo_readerMaxDays.setText(String.valueOf(user.getPeriodLimitation()));
         tf_userInfo_readerForfeit.setText("0");
@@ -349,14 +383,14 @@ public class ReaderController implements Initializable {
         tb_column_userInfo_bookId.setCellValueFactory(new PropertyValueFactory("bookISBN"));
         tb_column_userInfo_bookName.setCellValueFactory(new PropertyValueFactory("bookTitle"));
         tb_column_userInfo_backDate.setCellValueFactory(new PropertyValueFactory("backDate"));
+        tb_column_userInfo_reBorrow.setCellValueFactory((Callback<TableColumn.CellDataFeatures<CheckOutRecordItem, Boolean>, ObservableValue<Boolean>>) p -> new SimpleBooleanProperty(p.getValue() != null));
+        tb_column_userInfo_reBorrow.setCellFactory((Callback<TableColumn<CheckOutRecordItem, Boolean>, TableCell<CheckOutRecordItem, Boolean>>) p -> new ButtonCell());
 
-        tb_column_userInfo_reBorrow.setCellValueFactory((Callback<TableColumn.CellDataFeatures<CheckOutRecord, Boolean>, ObservableValue<Boolean>>) p -> new SimpleBooleanProperty(p.getValue() != null));
-        tb_column_userInfo_reBorrow.setCellFactory((Callback<TableColumn<CheckOutRecord, Boolean>, TableCell<CheckOutRecord, Boolean>>) p -> new ButtonCell());
-
-        ObservableList<CheckOutRecord> records = FXCollections.observableArrayList();
+        ObservableList<CheckOutRecordItem> records = FXCollections.observableArrayList();
         User user = userBusinessService.findByUsername(username);
-        List<CheckOutRecord> checkOutRecords = userBusinessService.getCheckOutRecordsOf(user);
-        records.addAll(checkOutRecords);
+        for(CheckOutRecord r : userBusinessService.getCheckOutRecordsOf(user)) {
+            records.add(new CheckOutRecordItem(r));
+        }
         tbv_userInfo_borrowRecord.setItems(records);
     }
 
