@@ -40,7 +40,7 @@
                                         </font></Label>
                                     <Label layoutX="381.0" layoutY="182.0" text="读者类别" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_js_reader_id" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="437.0" layoutY="128.0" />
-                                    <JFXTextField fx:id="tf_js_reader_name" alignment="CENTER" editable="false" layoutX="437.0" layoutY="174.0" />
+                                    <JFXTextField fx:id="tf_js_reader_type" alignment="CENTER" editable="false" layoutX="437.0" layoutY="174.0" />
                                     <Separator layoutX="63.0" layoutY="112.0" prefWidth="220.0" />
                                     <Label layoutX="158.0" layoutY="81.0" text="图书信息" />
                                     <Label layoutX="464.0" layoutY="81.0" text="读者信息" />
@@ -51,10 +51,10 @@
                                     <Label layoutX="381.0" layoutY="225.0" text="可借数量" textFill="DARKORANGE" />
                                     <Label layoutX="381.0" layoutY="271.0" text="可借天数" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_js_book_name" alignment="CENTER" editable="false" layoutX="120.0" layoutY="174.0" />
-                                    <JFXTextField fx:id="tf_js_book_publisher" alignment="CENTER" editable="false" layoutX="120.0" layoutY="221.0" />
-                                    <JFXTextField fx:id="tf_js_reader_type" alignment="CENTER" editable="false" layoutX="437.0" layoutY="221.0" />
-                                    <JFXTextField fx:id="tf_js_book_publish_time" alignment="CENTER" editable="false" layoutX="120.0" layoutY="267.0" />
-                                    <JFXTextField fx:id="tf_js_reader_sex" alignment="CENTER" editable="false" layoutX="437.0" layoutY="267.0" />
+                                    <JFXTextField fx:id="tf_js_book_author" alignment="CENTER" editable="false" layoutX="120.0" layoutY="221.0" />
+                                    <JFXTextField fx:id="tf_js_reader_maxNum" alignment="CENTER" editable="false" layoutX="437.0" layoutY="221.0" />
+                                    <JFXTextField fx:id="tf_js_book_type" alignment="CENTER" editable="false" layoutX="120.0" layoutY="267.0" />
+                                    <JFXTextField fx:id="tf_js_reader_maxDay" alignment="CENTER" editable="false" layoutX="437.0" layoutY="267.0" />
                                     <JFXButton fx:id="btn_jieshu_confirm" layoutX="267.0" layoutY="340.0" mnemonicParsing="false" onAction="#js_confirm_start" prefHeight="23.0" prefWidth="59.0" text="确认" />
                                     <JFXButton fx:id="btn_jieshu_clear" layoutX="332.0" layoutY="340.0" mnemonicParsing="false" onAction="#js_clear_start" prefHeight="23.0" prefWidth="63.0" text="清楚" />
                                     <Label layoutX="57.0" layoutY="308.0" text="借书日期" textFill="#304ffe">
@@ -95,7 +95,7 @@
                                         </font></Label>
                                     <Label layoutX="76.0" layoutY="169.0" text="读者类别" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_hs_reader_id" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="131.0" layoutY="129.0" />
-                                    <JFXTextField fx:id="tf_hs_reader_name" alignment="CENTER" editable="false" layoutX="132.0" layoutY="161.0" />
+                                    <JFXTextField fx:id="tf_hs_reader_type" alignment="CENTER" editable="false" layoutX="132.0" layoutY="161.0" />
                                     <Separator layoutX="63.0" layoutY="112.0" prefWidth="220.0" />
                                     <Label layoutX="158.0" layoutY="81.0" text="读者信息" />
                                     <Label layoutX="464.0" layoutY="81.0" text="借书信息" />
@@ -104,8 +104,8 @@
                                     <Label layoutX="76.0" layoutY="197.0" text="可借数量" textFill="DARKORANGE" />
                                     <Label layoutX="76.0" layoutY="228.0" text="可借天数" textFill="DARKORANGE" />
                                     <JFXTextField fx:id="tf_hs_book_name" alignment="CENTER" editable="false" layoutX="402.0" layoutY="309.0" />
-                                    <JFXTextField fx:id="tf_hs_reader_type" alignment="CENTER" editable="false" layoutX="132.0" layoutY="193.0" />
-                                    <JFXTextField fx:id="tf_hs_reader_sex" alignment="CENTER" editable="false" layoutX="132.0" layoutY="224.0" />
+                                    <JFXTextField fx:id="tf_hs_reader_maxNum" alignment="CENTER" editable="false" layoutX="132.0" layoutY="193.0" />
+                                    <JFXTextField fx:id="tf_hs_reader_maxDay" alignment="CENTER" editable="false" layoutX="132.0" layoutY="224.0" />
                                     <JFXButton layoutX="267.0" layoutY="352.0" mnemonicParsing="false" onAction="#huanshu_start" prefHeight="23.0" prefWidth="59.0" text="确认" />
                                     <JFXButton layoutX="332.0" layoutY="352.0" mnemonicParsing="false" onAction="#clear_hs_reader" prefHeight="23.0" prefWidth="63.0" text="清楚" />
                                     <TableView fx:id="tbv_huanshu_record" layoutX="345.0" layoutY="124.0" prefHeight="127.0" prefWidth="284.0">
@@ -151,12 +151,12 @@
                                             <JFXButton fx:id="btn_ts_add_book_add" layoutX="392.0" layoutY="235.0" mnemonicParsing="false" onAction="#ts_book_add" prefHeight="23.0" prefWidth="69.0" text="添加" />
                                             <JFXButton fx:id="btn_ts_add_book_clear" layoutX="473.0" layoutY="235.0" mnemonicParsing="false" onAction="#ts_book_add_clear" prefHeight="23.0" prefWidth="69.0" text="清楚" />
                                             <JFXTextField fx:id="tf_ts_add_book_id" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="112.0" layoutY="35.0" />
-                                            <JFXTextField fx:id="tf_ts_add_book_translator" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="112.0" layoutY="121.0" />
+                                            <JFXTextField fx:id="tf_ts_add_book_level" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="112.0" layoutY="121.0" />
                                             <JFXTextField fx:id="tf_ts_add_book_stock" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="112.0" layoutY="160.0" />
                                             <JFXTextField fx:id="tf_ts_add_book_name" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="404.0" layoutY="35.0" />
                                             <JFXTextField fx:id="tf_ts_add_book_author" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="404.0" layoutY="79.0" />
-                                            <JFXTextField fx:id="tf_ts_add_book_publisher" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="404.0" layoutY="121.0" />
-                                            <JFXTextField fx:id="cb_ts_add_book_type" focusColor="DEEPSKYBLUE" layoutX="115.0" layoutY="78.0" prefHeight="28.0" prefWidth="183.0" />
+                                            <JFXTextField fx:id="tf_ts_add_book_outCount" alignment="CENTER" focusColor="DEEPSKYBLUE" layoutX="404.0" layoutY="121.0" />
+                                            <JFXTextField fx:id="tf_ts_add_book_type" focusColor="DEEPSKYBLUE" layoutX="115.0" layoutY="78.0" prefHeight="28.0" prefWidth="183.0" />
                                         </AnchorPane>
                                     </Tab>
                                     <Tab text="修改">
@@ -171,12 +171,12 @@
                                             <JFXButton fx:id="btn_ts_alter_book_alterBtn" layoutX="392.0" layoutY="235.0" mnemonicParsing="false" onAction="#ts_book_alter_start" prefHeight="23.0" prefWidth="69.0" text="修改" />
                                             <JFXButton fx:id="btn_ts_alter_book_clearBtn" layoutX="473.0" layoutY="235.0" mnemonicParsing="false" onAction="#ts_book_alter_clear" prefHeight="23.0" prefWidth="69.0" text="清楚" />
                                             <JFXTextField fx:id="tf_ts_alter_book_id" editable="false" layoutX="112.0" layoutY="66.0" />
-                                            <JFXTextField fx:id="tf_ts_alter_book_translator" layoutX="112.0" layoutY="143.0" />
+                                            <JFXTextField fx:id="tf_ts_alter_book_level" layoutX="112.0" layoutY="143.0" />
                                             <JFXTextField fx:id="tf_ts_alter_book_stock" layoutX="112.0" layoutY="177.0" />
                                             <JFXTextField fx:id="tf_ts_alter_book_name" layoutX="404.0" layoutY="66.0" />
                                             <JFXTextField fx:id="tf_ts_alter_book_author" layoutX="404.0" layoutY="108.0" />
-                                            <JFXTextField fx:id="tf_ts_alter_book_publisher" layoutX="404.0" layoutY="143.0" />
-                                            <JFXTextField fx:id="cb_ts_alter_book_type" layoutX="111.0" layoutY="108.0" prefWidth="150.0" />
+                                            <JFXTextField fx:id="tf_ts_alter_book_outCount" layoutX="404.0" layoutY="143.0" />
+                                            <JFXTextField fx:id="ts_alter_book_type" layoutX="111.0" layoutY="108.0" prefWidth="150.0" />
                                             <Label layoutX="43.0" layoutY="27.0" text="图书编号" textFill="#2196f3">
                                                 <font>
                                                     <Font name="System Bold Italic" size="17.0" />
@@ -198,12 +198,12 @@
                                             <JFXButton fx:id="btn_ts_delete_book_deleteBtn" layoutX="392.0" layoutY="235.0" mnemonicParsing="false" onAction="#ts_book_delete" prefHeight="23.0" prefWidth="69.0" text="删除" />
                                             <JFXButton fx:id="btn_ts_delete_book_clearBtn" layoutX="473.0" layoutY="235.0" mnemonicParsing="false" onAction="#ts_book_delete_clear" prefHeight="23.0" prefWidth="69.0" text="清楚" />
                                             <JFXTextField fx:id="tf_ts_delete_book_id" editable="false" layoutX="112.0" layoutY="66.0" />
-                                            <JFXTextField fx:id="tf_ts_delete_book_translator" editable="false" layoutX="112.0" layoutY="143.0" />
+                                            <JFXTextField fx:id="tf_ts_delete_book_level" editable="false" layoutX="112.0" layoutY="143.0" />
                                             <JFXTextField fx:id="tf_ts_delete_book_stock" editable="false" layoutX="112.0" layoutY="177.0" />
                                             <JFXTextField fx:id="tf_ts_delete_book_name" editable="false" layoutX="404.0" layoutY="66.0" />
                                             <JFXTextField fx:id="tf_ts_delete_book_author" editable="false" layoutX="404.0" layoutY="108.0" />
-                                            <JFXTextField fx:id="tf_ts_delete_book_publisher" editable="false" layoutX="404.0" layoutY="143.0" />
-                                            <JFXTextField fx:id="cb_ts_delete_book_type" layoutX="111.0" layoutY="108.0" prefWidth="150.0" />
+                                            <JFXTextField fx:id="tf_ts_delete_book_outCount" editable="false" layoutX="404.0" layoutY="143.0" />
+                                            <JFXTextField fx:id="ts_delete_book_type" layoutX="111.0" layoutY="108.0" prefWidth="150.0" />
                                             <Label layoutX="43.0" layoutY="27.0" text="图书编号" textFill="#2196f3">
                                                 <font>
                                                     <Font name="System Bold Italic" size="17.0" />
@@ -364,6 +364,7 @@
                             <TableView fx:id="tbv_message" layoutX="14.0" layoutY="45.0" prefHeight="320.0" prefWidth="635.0">
                             </TableView>
                             <JFXButton layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#getMessage" prefHeight="23.0" prefWidth="65.0" text="刷新" />
+                     <Label fx:id="lb_message_number" layoutX="14.0" layoutY="19.0" prefHeight="20.0" prefWidth="63.0" text="0 条消息" textFill="WHITE" />
                         </children>
                     </AnchorPane>
                 </Tab>

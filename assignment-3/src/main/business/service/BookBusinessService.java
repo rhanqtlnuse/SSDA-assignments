@@ -24,6 +24,7 @@ public interface BookBusinessService {
     Book findByISBN(String isbn);
     List<Book> findByTitle(String title);
     List<Book> findByAuthor(String author);
+    List<Book> findAll();
 
     CheckOutResultMessage checkOut(User u, Book b);
     void checkIn(User u, Book b);

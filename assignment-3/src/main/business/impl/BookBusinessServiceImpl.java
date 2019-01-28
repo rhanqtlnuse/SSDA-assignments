@@ -86,6 +86,11 @@ public class BookBusinessServiceImpl implements BookBusinessService {
     }
 
     @Override
+    public List<Book> findAll() {
+        return bookDataService.findAll();
+    }
+
+    @Override
     public CheckOutResultMessage checkOut(User u, Book b) {
         return (CheckOutResultMessage) u.accept(new CheckOutVisitor(b));
     }
