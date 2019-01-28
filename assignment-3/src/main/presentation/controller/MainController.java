@@ -437,7 +437,7 @@ public class MainController implements Initializable {
      */
     @FXML
     public void js_confirm_start() {
-        User user = userBusinessService.findByUsername(this.username);
+        User user = userBusinessService.findByUsername(tf_js_reader_id.getText());
 
         if(!tf_js_book_name.getText().equals("") && !tf_js_reader_id.getText().equals("")) {
             String bookISBN = tf_js_book_id.getText().trim();
@@ -512,7 +512,7 @@ public class MainController implements Initializable {
      */
     public void tf_js_reader_id_keyEvent(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            User user = userBusinessService.findByUsername(username);
+            User user = userBusinessService.findByUsername(tf_js_reader_id.getText());
             if (user != null) {
                 UserItem uit = new UserItem(user);
                 tf_js_reader_id.setText(uit.getUsername());
@@ -583,7 +583,7 @@ public class MainController implements Initializable {
      */
     private void tf_hs_reader_id_keyEvent(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            User user = userBusinessService.findByUsername(this.username);
+            User user = userBusinessService.findByUsername(tf_hs_reader_id.getText());
             //如果不为空，则进行
             if (user != null) {
                 UserItem uit = new UserItem(user);
@@ -602,7 +602,7 @@ public class MainController implements Initializable {
      * 还书模块---用于还书成功后刷新
      */
     private void tf_hs_reader_id_keyEvent() {
-        User user = userBusinessService.findByUsername(this.username);
+        User user = userBusinessService.findByUsername(tf_hs_reader_id.getText());
         //如果不为空，则进行
         if (user != null) {
             UserItem uit = new UserItem(user);
@@ -649,7 +649,7 @@ public class MainController implements Initializable {
      */
     private void tf_hs_book_id_keyEvent(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            String bookISBN = tf_js_book_id.getText().trim();
+            String bookISBN = tf_hs_book_id.getText().trim();
             Book book = bookBusinessService.findByISBN(bookISBN);;
             //如果不为空，则进行
             if (book != null) {
@@ -666,7 +666,7 @@ public class MainController implements Initializable {
     @FXML
     private void huanshu_start() {
         if (!tf_hs_reader_id.getText().trim().equals("") && !tf_hs_book_id.getText().trim().equals("")) {
-            User user = userBusinessService.findByUsername(username);
+            User user = userBusinessService.findByUsername(tf_hs_reader_id.getText());
             String bookISBN = tf_js_book_id.getText().trim();
             Book book = bookBusinessService.findByISBN(bookISBN);
             String userType = user.getClass().getSimpleName();
@@ -1050,16 +1050,16 @@ public class MainController implements Initializable {
             SignUpResultMessage result = null;
             switch (identity) {
                 case "本科生":
-                    result = userBusinessService.signUp(username, DEFAULT_PASSWORD, UserType.UNDERGRADUATE);
+                    result = userBusinessService.signUp(tf_rd_add_reader_id.getText(), DEFAULT_PASSWORD, UserType.UNDERGRADUATE);
                     break;
                 case "研究生":
-                    result = userBusinessService.signUp(username, DEFAULT_PASSWORD, UserType.GRADUATE);
+                    result = userBusinessService.signUp(tf_rd_add_reader_id.getText(), DEFAULT_PASSWORD, UserType.GRADUATE);
                     break;
                 case "教师":
-                    result = userBusinessService.signUp(username, DEFAULT_PASSWORD, UserType.TEACHER);
+                    result = userBusinessService.signUp(tf_rd_add_reader_id.getText(), DEFAULT_PASSWORD, UserType.TEACHER);
                     break;
                 case "管理员":
-                    result = userBusinessService.signUp(username, DEFAULT_PASSWORD, UserType.ADMINISTRATOR);
+                    result = userBusinessService.signUp(tf_rd_add_reader_id.getText(), DEFAULT_PASSWORD, UserType.ADMINISTRATOR);
                     break;
             }
 
@@ -1105,7 +1105,7 @@ public class MainController implements Initializable {
     public void alter_rd_reader() {
         if (!tf_rd_alter_reader_id.getText().equals("") && !tf_rd_alter_reader_name.getText().equals("") && !tf_rd_alter_reader_numbers.getText().equals("") && !tf_rd_alter_reader_days.getText().equals("") &&
                 !cb_rd_alter_reader_type.getSelectionModel().getSelectedItem().toString().equals("") && !cb_rd_alter_reader_sex.getSelectionModel().getSelectedItem().toString().equals("")) {
-            User user = userBusinessService.findByUsername(username);
+            User user = userBusinessService.findByUsername(tf_rd_alter_reader_days.getText());
 
             userBusinessService.updatePersonalInfo(user);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1123,7 +1123,7 @@ public class MainController implements Initializable {
     @FXML
     public void rd_reader_alter_search() {
         if (!tf_rd_alter_reader_search_id.getText().equals("")) {
-            User user = userBusinessService.findByUsername(username);
+            User user = userBusinessService.findByUsername(tf_rd_alter_reader_days.getText());
             if (user != null) {
                 UserItem uit = new UserItem(user);
                 tf_rd_delete_reader_id.setText(uit.getUsername());;
@@ -1163,7 +1163,7 @@ public class MainController implements Initializable {
     @FXML
     public void rd_reader_delete_search() {
         if (!tf_rd_delete_reader_search_id.getText().equals("")) {
-            User user = userBusinessService.findByUsername(username);
+            User user = userBusinessService.findByUsername(tf_rd_delete_reader_days.getText());
             if (user != null) {
                 UserItem uit = new UserItem(user);
                 tf_rd_delete_reader_id.setText(uit.getUsername());;
@@ -1197,8 +1197,8 @@ public class MainController implements Initializable {
             alert.showAndWait();
             ButtonType type = alert.getResult();
             if (type == ButtonType.OK) {
-                User user = userBusinessService.findByUsername(username);
-                CancelResultMessage result = userBusinessService.cancel(username, user.getPassword());
+                User user = userBusinessService.findByUsername(tf_rd_delete_reader_days.getText());
+                CancelResultMessage result = userBusinessService.cancel(user.getUsername(), user.getPassword());
                 if(CancelResultMessage.SUCCEEDED == result) {
                     Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
                     alert1.setAlertType(Alert.AlertType.INFORMATION);
